@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Find Your Calorie Target</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{min-height:100%;background:#f5f5f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a18;display:flex;align-items:flex-start;justify-content:center;padding:20px 0}
+.phone-frame{width:100%;max-width:430px;min-height:100vh;background:#ffffff;overflow:hidden;position:relative}
+@media(min-width:500px){
+  body{align-items:center;padding:40px 0}
+  .phone-frame{min-height:auto;border-radius:36px;border:1px solid #e0dfd8;box-shadow:0 4px 40px rgba(0,0,0,0.08)}
+}
+.phone-inner{padding:52px 28px 40px;min-height:100vh;display:flex;flex-direction:column}
+@media(min-width:500px){.phone-inner{min-height:700px}}
+.progress-bar{height:3px;background:#e8e7e0;border-radius:2px;margin-bottom:32px;flex-shrink:0}
+.progress-fill{height:100%;background:#1D9E75;border-radius:2px;transition:width .4s ease}
+.step{display:none;flex-direction:column;flex:1}.step.active{display:flex}
+.step-label{font-size:11px;color:#888780;margin-bottom:10px;letter-spacing:.6px;text-transform:uppercase;font-weight:500}
+.step-title{font-size:24px;font-weight:600;color:#1a1a18;margin:0 0 10px;line-height:1.25}
+.step-sub{font-size:15px;color:#5f5e5a;margin:0 0 28px;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
+.opt-btn{background:#ffffff;border:1px solid #d3d1c7;border-radius:16px;padding:18px 20px;text-align:left;cursor:pointer;transition:all .15s;width:100%;min-height:60px;display:flex;flex-direction:column;justify-content:center}
+.opt-btn:active{transform:scale(0.98)}
+.opt-btn.sel-green{border:2px solid #1D9E75;background:#E1F5EE}
+.opt-btn.sel-blue{border:2px solid #185FA5;background:#E6F1FB}
+.opt-btn.sel-pink{border:2px solid #993556;background:#FBEAF0}
+.opt-title{font-size:15px;font-weight:600;color:#1a1a18;display:block}
+.opt-sub{font-size:13px;color:#5f5e5a;display:block;margin-top:4px;line-height:1.4}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.two-col .opt-btn{min-height:72px;align-items:center;text-align:center}
+.two-col .opt-title{text-align:center}
+.input-row{margin-bottom:18px}
+.input-row label{font-size:13px;color:#5f5e5a;display:block;margin-bottom:8px;font-weight:500}
+.input-row input,.input-row select{width:100%;padding:16px 18px;font-size:17px;border-radius:14px;border:1px solid #d3d1c7;background:#ffffff;color:#1a1a18;outline:none;appearance:none;-webkit-appearance:none}
+.input-row input:focus,.input-row select:focus{border:2px solid #1D9E75}
+.height-row{display:grid;grid-template-columns:1fr auto 1fr auto;gap:10px;align-items:center}
+.height-row input{width:100%}
+.height-row span{font-size:15px;color:#5f5e5a;white-space:nowrap;font-weight:500}
+.unit-toggle{display:flex;gap:8px;margin-bottom:22px}
+.unit-btn{flex:1;padding:12px;font-size:14px;border-radius:12px;border:1px solid #d3d1c7;background:#ffffff;cursor:pointer;color:#5f5e5a;text-align:center;font-weight:500;transition:all .15s}
+.unit-btn.active{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.spacer{flex:1}
+.nav-row{display:flex;gap:12px;margin-top:auto;padding-top:20px;flex-shrink:0}
+.btn-back{width:56px;height:56px;border-radius:50%;border:1px solid #d3d1c7;background:transparent;cursor:pointer;color:#5f5e5a;font-size:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.btn-back:active{background:#f1efe8}
+.btn-next{flex:1;padding:18px;font-size:17px;font-weight:600;border-radius:16px;border:none;background:#1D9E75;color:#fff;cursor:pointer;transition:opacity .15s;letter-spacing:-.2px}
+.btn-next:disabled{opacity:.35;cursor:default}
+.btn-next-full{width:100%;padding:18px;font-size:17px;font-weight:600;border-radius:16px;border:none;background:#1D9E75;color:#fff;cursor:pointer;letter-spacing:-.2px;transition:opacity .15s}
+.btn-next-full:disabled{opacity:.35;cursor:default}
+.result-big{text-align:center;padding:28px 0 20px}
+.result-big .val{font-size:56px;font-weight:700;color:#0F6E56;line-height:1;letter-spacing:-2px}
+.result-big .lbl{font-size:14px;color:#5f5e5a;margin-top:8px;font-weight:500}
+.gate-box{background:#f5f5f0;border-radius:20px;padding:24px;margin-bottom:16px}
+.gate-box p{font-size:15px;color:#5f5e5a;margin:0 0 18px;line-height:1.65}
+.gate-box strong{color:#1a1a18;font-weight:600}
+.gate-box input{width:100%;padding:16px 18px;font-size:17px;border-radius:14px;border:1px solid #d3d1c7;background:#ffffff;color:#1a1a18;margin-bottom:12px;outline:none;display:block}
+.gate-box input:focus{border:2px solid #1D9E75}
+.btn-send{width:100%;padding:18px;font-size:17px;font-weight:600;border-radius:16px;border:none;background:#1D9E75;color:#fff;cursor:pointer;letter-spacing:-.2px;transition:opacity .15s}
+.btn-send:disabled{opacity:.5;cursor:default}
+.social-proof{font-size:12px;color:#888780;text-align:center;margin-top:12px}
+.success-section{display:none}
+.celebrate{font-size:16px;font-weight:500;color:#085041;background:#E1F5EE;border-radius:16px;padding:16px 18px;margin-bottom:16px;line-height:1.6}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.metric-card{background:#f5f5f0;border-radius:14px;padding:16px;text-align:center}
+.metric-card .mv{font-size:22px;font-weight:700;color:#085041;letter-spacing:-.5px}
+.metric-card .ml{font-size:11px;color:#5f5e5a;margin-top:4px;font-weight:500;text-transform:uppercase;letter-spacing:.4px}
+.if-card{background:#E1F5EE;border-radius:14px;padding:16px 18px;font-size:14px;color:#085041;margin-bottom:10px;line-height:1.65;font-weight:500}
+.timeline-card{background:#f5f5f0;border-radius:14px;padding:16px 18px;font-size:14px;color:#5f5e5a;margin-bottom:10px;line-height:1.65}
+.action-card{border-left:3px solid #1D9E75;padding:14px 18px;font-size:14px;color:#5f5e5a;line-height:1.65;margin-bottom:4px}
+.action-card strong{color:#1a1a18;font-weight:600;display:block;margin-bottom:6px;font-size:15px}
+.warn-card{background:#FAEEDA;border-radius:14px;padding:14px 18px;font-size:14px;color:#633806;margin-bottom:10px;line-height:1.65;display:none}
+.warn-inline{font-size:13px;color:#854F0B;margin-top:8px;display:none;line-height:1.5}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235f5e5a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;padding-right:44px}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+<div class="phone-inner">
+<div class="progress-bar"><div class="progress-fill" id="prog" style="width:10%"></div></div>
+
+<div class="step active" id="s1">
+  <p class="step-label">Step 1 of 9</p>
+  <h1 class="step-title">What's your goal?</h1>
+  <p class="step-sub">This shapes everything — your calories, your eating window, all of it.</p>
+  <div class="opts">
+    <button class="opt-btn" onclick="pickGreen('g1','goal','lose',this)"><span class="opt-title">Lose fat</span><span class="opt-sub">Drop body fat while keeping muscle</span></button>
+    <button class="opt-btn" onclick="pickGreen('g1','goal','maintain',this)"><span class="opt-title">Maintain</span><span class="opt-sub">Stay at my current weight and composition</span></button>
+    <button class="opt-btn" onclick="pickGreen('g1','goal','gain',this)"><span class="opt-title">Build muscle</span><span class="opt-sub">Lean bulk — add size without excess fat</span></button>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav-row"><button class="btn-next-full" id="n1" onclick="goTo(2)" disabled>Next</button></div>
+</div>
+
+<div class="step" id="s2">
+  <p class="step-label">Step 2 of 9</p>
+  <h2 class="step-title">Your stats</h2>
+  <p class="step-sub">Used to calculate your basal metabolic rate.</p>
+  <div class="unit-toggle">
+    <button class="unit-btn active" id="ub-imperial" onclick="setUnit('imperial')">lbs / ft</button>
+    <button class="unit-btn" id="ub-metric" onclick="setUnit('metric')">kg / cm</button>
+  </div>
+  <div class="input-row">
+    <label id="lbl-weight">Weight (lbs)</label>
+    <input type="number" inputmode="decimal" id="weight" placeholder="e.g. 185" oninput="checkStep2()">
+  </div>
+  <div class="input-row">
+    <label>Height</label>
+    <div id="height-imperial" class="height-row">
+      <input type="number" inputmode="decimal" id="feet" placeholder="ft" min="3" max="8" oninput="checkStep2()">
+      <span>ft</span>
+      <input type="number" inputmode="decimal" id="inches-in" placeholder="in" min="0" max="11" oninput="checkStep2()">
+      <span>in</span>
+    </div>
+    <div id="height-metric" style="display:none">
+      <input type="number" inputmode="decimal" id="height-cm" placeholder="e.g. 178" oninput="checkStep2()">
+    </div>
+  </div>
+  <div class="input-row">
+    <label>Age</label>
+    <input type="number" inputmode="decimal" id="age" placeholder="e.g. 32" oninput="checkStep2()">
+  </div>
+  <div class="two-col" id="g-sex">
+    <button class="opt-btn" id="btn-male" onclick="pickSex('male')"><span class="opt-title">Male</span></button>
+    <button class="opt-btn" id="btn-female" onclick="pickSex('female')"><span class="opt-title">Female</span></button>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(1)">&#8592;</button>
+    <button class="btn-next" id="n2" onclick="goTo(3)" disabled>Next</button>
+  </div>
+</div>
+
+<div class="step" id="s3">
+  <p class="step-label">Step 3 of 9</p>
+  <h2 class="step-title">Roughly what's your body fat?</h2>
+  <p class="step-sub">A rough range is enough — this sharpens your numbers significantly.</p>
+  <div class="opts" id="g3">
+    <button class="opt-btn" onclick="pickGreen('g3','bf','10',this)"><span class="opt-title">Very lean — under 15%</span><span class="opt-sub">Visible abs or close to it</span></button>
+    <button class="opt-btn" onclick="pickGreen('g3','bf','20',this)"><span class="opt-title">Average — 15–25%</span><span class="opt-sub">Some definition, soft around the edges</span></button>
+    <button class="opt-btn" onclick="pickGreen('g3','bf','30',this)"><span class="opt-title">Above average — 25–35%</span><span class="opt-sub">Carrying noticeable extra weight</span></button>
+    <button class="opt-btn" onclick="pickGreen('g3','bf','38',this)"><span class="opt-title">High — over 35%</span><span class="opt-sub">Significant weight to lose</span></button>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(2)">&#8592;</button>
+    <button class="btn-next" id="n3" onclick="goTo(4)" disabled>Next</button>
+  </div>
+</div>
+
+<div class="step" id="s4">
+  <p class="step-label">Step 4 of 9</p>
+  <h2 class="step-title">How active are you?</h2>
+  <p class="step-sub">Be honest — most people overestimate this.</p>
+  <div class="opts" id="g4">
+    <button class="opt-btn" onclick="pickGreen('g4','activity','1.2',this)"><span class="opt-title">Sedentary</span><span class="opt-sub">Desk job, little to no exercise</span></button>
+    <button class="opt-btn" onclick="pickGreen('g4','activity','1.375',this)"><span class="opt-title">Lightly active</span><span class="opt-sub">1–3 workouts per week</span></button>
+    <button class="opt-btn" onclick="pickGreen('g4','activity','1.55',this)"><span class="opt-title">Moderately active</span><span class="opt-sub">3–5 workouts per week</span></button>
+    <button class="opt-btn" onclick="pickGreen('g4','activity','1.725',this)"><span class="opt-title">Very active</span><span class="opt-sub">6–7 hard workouts per week</span></button>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(3)">&#8592;</button>
+    <button class="btn-next" id="n4" onclick="goTo(5)" disabled>Next</button>
+  </div>
+</div>
+
+<div class="step" id="s5">
+  <p class="step-label">Step 5 of 9</p>
+  <h2 class="step-title">What time do you usually wake up?</h2>
+  <p class="step-sub">I'll build your IF window around your actual schedule, not a generic one.</p>
+  <div class="opts" id="g5">
+    <button class="opt-btn" onclick="pickGreen('g5','wake','5',this)"><span class="opt-title">Early riser — before 6am</span></button>
+    <button class="opt-btn" onclick="pickGreen('g5','wake','7',this)"><span class="opt-title">Morning person — 6–8am</span></button>
+    <button class="opt-btn" onclick="pickGreen('g5','wake','9',this)"><span class="opt-title">Mid-morning — 8–10am</span></button>
+    <button class="opt-btn" onclick="pickGreen('g5','wake','11',this)"><span class="opt-title">Late riser — after 10am</span></button>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(4)">&#8592;</button>
+    <button class="btn-next" id="n5" onclick="goTo(6)" disabled>Next</button>
+  </div>
+</div>
+
+<div class="step" id="s6">
+  <p class="step-label">Step 6 of 9</p>
+  <h2 class="step-title">What's your eating like now?</h2>
+  <p class="step-sub">No judgment — this tells me where you're starting from.</p>
+  <div class="opts" id="g6">
+    <button class="opt-btn" onclick="pickGreen('g6','eating','no_track',this)"><span class="opt-title">I eat whatever feels right</span><span class="opt-sub">No tracking, no structure</span></button>
+    <button class="opt-btn" onclick="pickGreen('g6','eating','eat_healthy',this)"><span class="opt-title">I eat healthy but still not losing</span><span class="opt-sub">Clean food, results aren't coming</span></button>
+    <button class="opt-btn" onclick="pickGreen('g6','eating','tried_track',this)"><span class="opt-title">I've tried tracking before</span><span class="opt-sub">Couldn't stick to it long term</span></button>
+    <button class="opt-btn" onclick="pickGreen('g6','eating','tracking',this)"><span class="opt-title">I already track calories</span><span class="opt-sub">Looking to optimize</span></button>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(5)">&#8592;</button>
+    <button class="btn-next" id="n6" onclick="goTo(7)" disabled>Next</button>
+  </div>
+</div>
+
+<div class="step" id="s7">
+  <p class="step-label">Step 7 of 9</p>
+  <h2 class="step-title">Have you tried intermittent fasting?</h2>
+  <p class="step-sub">It's a key part of the system — helps make hitting your target effortless.</p>
+  <div class="opts" id="g7">
+    <button class="opt-btn" onclick="pickGreen('g7','if','never',this)"><span class="opt-title">Never tried it</span><span class="opt-sub">Open to learning</span></button>
+    <button class="opt-btn" onclick="pickGreen('g7','if','tried',this)"><span class="opt-title">Tried it but gave up</span><span class="opt-sub">Wasn't sure how to make it work</span></button>
+    <button class="opt-btn" onclick="pickGreen('g7','if','doing',this)"><span class="opt-title">Currently doing it</span><span class="opt-sub">Looking to optimize</span></button>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(6)">&#8592;</button>
+    <button class="btn-next" id="n7" onclick="goTo(8)" disabled>Next</button>
+  </div>
+</div>
+
+<div class="step" id="s8">
+  <p class="step-label">Step 8 of 9</p>
+  <h2 class="step-title">What's your biggest struggle?</h2>
+  <p class="step-sub">Pick the one that hits closest to home.</p>
+  <div class="opts" id="g8">
+    <button class="opt-btn" onclick="pickGreen('g8','struggle','hunger',this)"><span class="opt-title">I get too hungry when I cut calories</span></button>
+    <button class="opt-btn" onclick="pickGreen('g8','struggle','social',this)"><span class="opt-title">Social eating kills my consistency</span></button>
+    <button class="opt-btn" onclick="pickGreen('g8','struggle','cooking',this)"><span class="opt-title">I don't know what meals to eat</span></button>
+    <button class="opt-btn" onclick="pickGreen('g8','struggle','willpower',this)"><span class="opt-title">I start strong then fall off after a week</span></button>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(7)">&#8592;</button>
+    <button class="btn-next" id="n8" onclick="afterStruggle()" disabled>Next</button>
+  </div>
+</div>
+
+<div class="step" id="s9">
+  <p class="step-label">Step 9 of 9</p>
+  <h2 class="step-title">Your fat loss target</h2>
+  <p class="step-sub">This lets me calculate your exact deficit and a realistic goal date.</p>
+  <div class="input-row">
+    <label>How many lbs do you want to lose?</label>
+    <input type="number" inputmode="decimal" id="fat-lbs" placeholder="e.g. 20" min="1" max="300" oninput="checkStep9()">
+  </div>
+  <div class="input-row">
+    <label>How fast do you want to lose it?</label>
+    <select id="pace" onchange="checkStep9()">
+      <option value="">Select a pace...</option>
+      <option value="0.5">Slow &amp; steady — 0.5 lb / week</option>
+      <option value="1">Moderate — 1 lb / week</option>
+      <option value="1.5">Faster — 1.5 lbs / week</option>
+      <option value="2">Aggressive — 2 lbs / week</option>
+    </select>
+    <p class="warn-inline" id="pace-warn">That pace would drop your calories too low — I'll adjust to a safe minimum.</p>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(8)">&#8592;</button>
+    <button class="btn-next" id="n9" onclick="goTo(10)" disabled>Next</button>
+  </div>
+</div>
+
+<div class="step" id="s10">
+  <p class="step-label">Your results</p>
+  <h2 class="step-title">Here's where you stand</h2>
+  <div class="result-big">
+    <div class="val" id="r-tdee">—</div>
+    <div class="lbl">Daily maintenance calories</div>
+  </div>
+  <div class="gate-box" id="gate-box">
+    <p>Enter your details and I'll send your <strong>exact calorie target</strong>, <strong>personalised IF window</strong>, <strong>goal date</strong>, and the <strong>3 meals I eat to stay on track without feeling restricted.</strong></p>
+    <input type="text" id="name-input" placeholder="First name" inputmode="text" autocomplete="given-name">
+    <input type="email" id="email-input" placeholder="Email address" inputmode="email" autocomplete="email">
+    <button class="btn-send" id="send-btn" onclick="submitEmail()">Send my plan</button>
+    <p class="social-proof">Join 2,400+ people who've used this calculator</p>
+  </div>
+  <div class="success-section" id="success-section">
+    <div class="celebrate" id="celebrate-msg"></div>
+    <div class="metrics-grid">
+      <div class="metric-card"><div class="mv" id="r-target">—</div><div class="ml">Daily target</div></div>
+      <div class="metric-card"><div class="mv" id="r-date">—</div><div class="ml">Goal date</div></div>
+      <div class="metric-card"><div class="mv" id="r-deficit">—</div><div class="ml">Daily deficit</div></div>
+      <div class="metric-card"><div class="mv" id="r-weeks">—</div><div class="ml">Weeks to goal</div></div>
+    </div>
+    <div class="if-card" id="if-window"></div>
+    <div class="warn-card" id="warning-box"></div>
+    <div class="timeline-card" id="timeline-box"></div>
+    <div class="action-card" id="action-box"></div>
+  </div>
+  <div class="spacer"></div>
+  <div class="nav-row" style="padding-top:16px">
+    <button class="btn-back" id="back-final" onclick="goTo(9)">&#8592;</button>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+var answers={};
+var unit='imperial';
+var TOTAL=10;
+
+function pickGreen(gridId,key,val,el){
+  var containers=[document.getElementById(gridId),el.closest('.opts'),el.closest('.two-col')];
+  for(var i=0;i<containers.length;i++){
+    if(containers[i]){containers[i].querySelectorAll('.opt-btn').forEach(function(b){b.classList.remove('sel-green','sel-blue','sel-pink');});break;}
+  }
+  el.classList.add('sel-green');
+  answers[key]=val;
+  var stepEl=el.closest('.step');
+  if(stepEl){var sNum=parseInt(stepEl.id.replace('s',''));var nb=document.getElementById('n'+sNum);if(nb)nb.disabled=false;}
+}
+
+function pickSex(val){
+  document.getElementById('btn-male').classList.remove('sel-blue','sel-pink');
+  document.getElementById('btn-female').classList.remove('sel-blue','sel-pink');
+  if(val==='male') document.getElementById('btn-male').classList.add('sel-blue');
+  else document.getElementById('btn-female').classList.add('sel-pink');
+  answers['sex']=val;
+  checkStep2();
+}
+
+function checkStep2(){
+  var w=document.getElementById('weight').value;
+  var a=document.getElementById('age').value;
+  var hOk=unit==='imperial'?document.getElementById('feet').value!=='':document.getElementById('height-cm').value!=='';
+  document.getElementById('n2').disabled=!(w&&hOk&&a&&answers['sex']);
+}
+
+function checkStep9(){
+  var lbs=document.getElementById('fat-lbs').value;
+  var pace=parseFloat(document.getElementById('pace').value);
+  var warn=document.getElementById('pace-warn');
+  if(pace&&lbs){var tdee=calcTDEE();var floor=answers['sex']==='female'?1200:1500;var dailyDef=Math.round(pace*3500/7);warn.style.display=(tdee-dailyDef)<floor?'block':'none';}
+  document.getElementById('n9').disabled=!(lbs&&pace);
+}
+
+function setUnit(u){
+  unit=u;
+  document.getElementById('ub-imperial').classList.toggle('active',u==='imperial');
+  document.getElementById('ub-metric').classList.toggle('active',u==='metric');
+  document.getElementById('lbl-weight').textContent=u==='imperial'?'Weight (lbs)':'Weight (kg)';
+  document.getElementById('height-imperial').style.display=u==='imperial'?'grid':'none';
+  document.getElementById('height-metric').style.display=u==='metric'?'block':'none';
+  checkStep2();
+}
+
+function getHeightCm(){
+  if(unit==='imperial'){var ft=parseFloat(document.getElementById('feet').value)||0;var ins=parseFloat(document.getElementById('inches-in').value)||0;return(ft*12+ins)*2.54;}
+  return parseFloat(document.getElementById('height-cm').value)||0;
+}
+
+function calcTDEE(){
+  var w=parseFloat(document.getElementById('weight').value)||0;
+  var a=parseFloat(document.getElementById('age').value)||0;
+  var wKg=unit==='imperial'?w*0.453592:w;
+  var bf=parseFloat(answers['bf']||'20')/100;
+  var lbm=wKg*(1-bf);
+  var bmr=370+21.6*lbm;
+  var act=parseFloat(answers['activity']||'1.375');
+  return Math.round(bmr*act);
+}
+
+function getIFWindow(){
+  var wake=parseInt(answers['wake']||'7');
+  var goal=answers['goal'];
+  var fastHours=goal==='gain'?14:16;
+  var eatHours=24-fastHours;
+  var startHour=wake+4;
+  var endHour=startHour+eatHours;
+  function fmt(h){var hh=h%24;var p=hh>=12?'pm':'am';var d=hh>12?hh-12:(hh===0?12:hh);return d+p;}
+  return{start:fmt(startHour),end:fmt(endHour),hours:fastHours,eat:eatHours};
+}
+
+function getGoalDate(weeks){
+  var d=new Date();d.setDate(d.getDate()+weeks*7);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+
+function goTo(n){
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+  var el=document.getElementById('s'+n);
+  if(el){el.classList.add('active');}
+  document.getElementById('prog').style.width=Math.round((Math.min(n,TOTAL)/TOTAL)*100)+'%';
+  if(n===10)showMaintenance();
+  window.scrollTo(0,0);
+}
+
+function afterStruggle(){
+  if(answers['goal']==='lose') goTo(9); else goTo(10);
+}
+
+function showMaintenance(){
+  document.getElementById('r-tdee').textContent=calcTDEE().toLocaleString();
+  document.getElementById('back-final').onclick=function(){goTo(answers['goal']==='lose'?9:8);};
+}
+
+function submitEmail(){
+  var name=document.getElementById('name-input').value.trim();
+  var email=document.getElementById('email-input').value.trim();
+  if(!name||!email||!email.includes('@'))return;
+  var firstName=name.split(' ')[0];
+  var tdee=calcTDEE();
+  var goal=answers['goal'];
+  var floor=answers['sex']==='female'?1200:1500;
+  var target,weeks,deficit,dateStr,ifText,timelineText,actionText,warnText='';
+  var ifWin=getIFWindow();
+  var ifStr=ifWin.hours+':'+ifWin.eat+' — eat between '+ifWin.start+' and '+ifWin.end;
+  if(goal==='lose'){
+    var pace=parseFloat(document.getElementById('pace').value);
+    var fatLbs=parseFloat(document.getElementById('fat-lbs').value);
+    var dailyDef=Math.round(pace*3500/7);
+    var rawTarget=tdee-dailyDef;
+    var safeTarget=Math.max(rawTarget,floor);
+    var adjustedDef=tdee-safeTarget;
+    var adjustedPace=(adjustedDef*7)/3500;
+    deficit=adjustedDef;target=safeTarget;
+    weeks=Math.round(fatLbs/adjustedPace);
+    dateStr=getGoalDate(weeks);
+    if(safeTarget>rawTarget)warnText='Your chosen pace would drop calories below a safe level. I\'ve adjusted your target to '+safeTarget.toLocaleString()+' cal to protect your muscle and metabolism.';
+    ifText='Your IF window: '+ifStr+'. Built around your wake time so it works with your body clock, not against it.';
+    var smap={
+      hunger:'Since hunger is your biggest challenge — I\'ll send you my top 5 high-volume meals that keep you full on '+safeTarget.toLocaleString()+' calories. Big portions, real food, zero suffering.',
+      social:'Since social eating trips you up — I\'ll include my simple guide to eating out and staying on track without being that person at the table.',
+      cooking:'Since you\'re not sure what to eat — I\'ll send you my exact weekly meal rotation. 7 days of meals that fit your '+safeTarget.toLocaleString()+' cal target, all under 30 minutes to make.',
+      willpower:'Since consistency is your challenge — I\'ll share the exact system I use to stay on track when motivation is zero. It has nothing to do with willpower.'
+    };
+    actionText=smap[answers['struggle']]||'Your full personalised plan is on its way.';
+    timelineText='At a '+adjustedDef+' cal/day deficit you\'ll reach your goal by '+dateStr+' — that\'s ~'+weeks+' weeks away. Totally doable with the right system.';
+  }else if(goal==='gain'){
+    target=tdee+300;deficit=300;weeks=null;dateStr='—';
+    ifText='Your IF window: '+ifStr+'. A wider eating window makes hitting your surplus comfortable without forcing food.';
+    timelineText='A 300 cal/day surplus keeps your bulk lean — enough to build muscle without excess fat gain.';
+    actionText='I\'ll send you my high-protein meal rotation designed for a lean bulk — real food that makes hitting your surplus easy and enjoyable.';
+  }else{
+    target=tdee;deficit=0;weeks=null;dateStr='—';
+    ifText='Your IF window: '+ifStr+'. Keeps your maintenance calories on autopilot without constant tracking.';
+    timelineText='Maintenance is about consistency over perfection. Hitting your number most days is what compounds into real long-term results.';
+    actionText='I\'ll send you my maintenance meal framework — how to eat freely and satisfyingly without accidentally drifting into a surplus.';
+  }
+  document.getElementById('r-target').textContent=target.toLocaleString();
+  document.getElementById('r-deficit').textContent=deficit?deficit+' cal':'—';
+  document.getElementById('r-weeks').textContent=weeks?weeks+' wks':'—';
+  document.getElementById('r-date').textContent=dateStr;
+  document.getElementById('if-window').textContent=ifText;
+  document.getElementById('timeline-box').textContent=timelineText;
+  var wb=document.getElementById('warning-box');
+  if(warnText){wb.textContent=warnText;wb.style.display='block';}
+  document.getElementById('action-box').innerHTML='<strong>What\'s coming to you, '+firstName+'</strong>'+actionText;
+  document.getElementById('celebrate-msg').textContent='You\'re all set, '+firstName+'. Here\'s a preview of your numbers — full plan is on its way to your inbox.';
+  document.getElementById('gate-box').style.display='none';
+  document.getElementById('success-section').style.display='block';
+  document.getElementById('send-btn').disabled=true;
+}
+</script>
+</body>
+</html>
