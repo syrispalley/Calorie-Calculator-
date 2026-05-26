@@ -29,6 +29,13 @@ html,body{min-height:100%;background:#f5f5f0;font-family:-apple-system,BlinkMacS
 .opt-title{font-size:15px;font-weight:600;color:#1a1a18;display:block}
 .opt-sub{font-size:13px;color:#5f5e5a;display:block;margin-top:4px;line-height:1.4}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.bf-opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.bf-btn{background:#ffffff;border:1px solid #d3d1c7;border-radius:16px;padding:14px 12px;text-align:center;cursor:pointer;transition:all .15s;width:100%;display:flex;flex-direction:column;align-items:center;gap:8px}
+.bf-btn:active{transform:scale(0.98)}
+.bf-btn.sel-green{border:2px solid #1D9E75;background:#E1F5EE}
+.bf-btn svg{display:block}
+.bf-label{font-size:13px;font-weight:600;color:#1a1a18}
+.bf-sub{font-size:11px;color:#5f5e5a;line-height:1.4}
 .two-col .opt-btn{min-height:72px;align-items:center;text-align:center}
 .two-col .opt-title{text-align:center}
 .input-row{margin-bottom:18px}
@@ -49,10 +56,19 @@ html,body{min-height:100%;background:#f5f5f0;font-family:-apple-system,BlinkMacS
 .btn-next:disabled{opacity:.35;cursor:default}
 .btn-next-full{width:100%;padding:18px;font-size:17px;font-weight:600;border-radius:16px;border:none;background:#1D9E75;color:#fff;cursor:pointer;letter-spacing:-.2px;transition:opacity .15s}
 .btn-next-full:disabled{opacity:.35;cursor:default}
-.result-big{text-align:center;padding:28px 0 20px}
+.result-big{text-align:center;padding:28px 0 20px;color:#1a1a18}
 .result-big .val{font-size:56px;font-weight:700;color:#0F6E56;line-height:1;letter-spacing:-2px}
 .result-big .lbl{font-size:14px;color:#5f5e5a;margin-top:8px;font-weight:500}
-.gate-box{background:#f5f5f0;border-radius:20px;padding:24px;margin-bottom:16px}
+.tdee-explain{font-size:13px;color:#5f5e5a;margin-top:10px;line-height:1.6;padding:0 8px}
+.intro-screen{display:flex;flex-direction:column;flex:1;justify-content:center;align-items:center;text-align:center;padding:20px 0}
+.intro-icon{width:72px;height:72px;background:#E1F5EE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 28px}
+.intro-icon svg{width:36px;height:36px}
+.intro-title{font-size:26px;font-weight:700;color:#1a1a18;line-height:1.25;margin-bottom:16px}
+.intro-title span{color:#1D9E75}
+.intro-sub{font-size:15px;color:#5f5e5a;line-height:1.7;margin-bottom:40px}
+.btn-start{width:100%;padding:18px;font-size:17px;font-weight:600;border-radius:16px;border:none;background:#1D9E75;color:#fff;cursor:pointer;letter-spacing:-.2px}
+.intro-footer{font-size:12px;color:#888780;margin-top:16px}
+.gate-box{background:#f5f5f0;border-radius:20px;padding:24px;margin-bottom:16px;color:#1a1a18}
 .gate-box p{font-size:15px;color:#5f5e5a;margin:0 0 18px;line-height:1.65}
 .gate-box strong{color:#1a1a18;font-weight:600}
 .gate-box input{width:100%;padding:16px 18px;font-size:17px;border-radius:14px;border:1px solid #d3d1c7;background:#ffffff;color:#1a1a18;margin-bottom:12px;outline:none;display:block}
@@ -61,6 +77,8 @@ html,body{min-height:100%;background:#f5f5f0;font-family:-apple-system,BlinkMacS
 .btn-send:disabled{opacity:.5;cursor:default}
 .social-proof{font-size:12px;color:#888780;text-align:center;margin-top:12px}
 .success-section{display:none}
+#s11{overflow-y:auto;-webkit-overflow-scrolling:touch}
+#s11.active{display:block !important}
 .celebrate{font-size:16px;font-weight:500;color:#085041;background:#E1F5EE;border-radius:16px;padding:16px 18px;margin-bottom:16px;line-height:1.6}
 .metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .metric-card{background:#f5f5f0;border-radius:14px;padding:16px;text-align:center}
@@ -68,10 +86,17 @@ html,body{min-height:100%;background:#f5f5f0;font-family:-apple-system,BlinkMacS
 .metric-card .ml{font-size:11px;color:#5f5e5a;margin-top:4px;font-weight:500;text-transform:uppercase;letter-spacing:.4px}
 .if-card{background:#E1F5EE;border-radius:14px;padding:16px 18px;font-size:14px;color:#085041;margin-bottom:10px;line-height:1.65;font-weight:500}
 .timeline-card{background:#f5f5f0;border-radius:14px;padding:16px 18px;font-size:14px;color:#5f5e5a;margin-bottom:10px;line-height:1.65}
+.explain-card{background:#f0f9f5;border-radius:14px;padding:16px 18px;font-size:14px;color:#085041;margin-bottom:10px;line-height:1.65;border:1px solid #9FE1CB}
+.explain-card strong{font-weight:600;display:block;margin-bottom:4px;font-size:15px}
 .action-card{border-left:3px solid #1D9E75;padding:14px 18px;font-size:14px;color:#5f5e5a;line-height:1.65;margin-bottom:4px}
 .action-card strong{color:#1a1a18;font-weight:600;display:block;margin-bottom:6px;font-size:15px}
 .warn-card{background:#FAEEDA;border-radius:14px;padding:14px 18px;font-size:14px;color:#633806;margin-bottom:10px;line-height:1.65;display:none}
 .warn-inline{font-size:13px;color:#854F0B;margin-top:8px;display:none;line-height:1.5}
+.or-divider{display:flex;align-items:center;gap:12px;margin:2px 0}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:#d3d1c7}
+.or-divider span{font-size:13px;color:#888780;font-weight:500;letter-spacing:.4px}
+.micro-feedback{font-size:13px;color:#1D9E75;font-weight:500;min-height:20px;margin-bottom:8px;transition:opacity .3s;opacity:0;text-align:center}
+.micro-feedback.show{opacity:1}
 select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235f5e5a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;padding-right:44px}
 </style>
 </head>
@@ -80,21 +105,54 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 <div class="phone-inner">
 <div class="progress-bar"><div class="progress-fill" id="prog" style="width:10%"></div></div>
 
-<div class="step active" id="s1">
-  <p class="step-label">Step 1 of 9</p>
+<div class="step active" id="s0">
+  <div class="intro-screen">
+    <div class="intro-icon">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="16" stroke="#1D9E75" stroke-width="2"/>
+        <path d="M18 10v8l5 3" stroke="#1D9E75" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1 class="intro-title">Take the first step to understanding your <span>maintenance calories</span></h1>
+    <p class="intro-sub">Knowing your maintenance number is the foundation of every health goal. Whether you want to lose fat, build muscle, or stay where you are, it all starts here.</p>
+    <button class="btn-start" onclick="startCalc()">Get started</button>
+    <p class="intro-footer">Takes about 2 minutes</p>
+  </div>
+</div>
+
+<div class="step" id="s1">
+  <p class="step-label">Step 1 of 7</p>
   <h1 class="step-title">What's your goal?</h1>
-  <p class="step-sub">This shapes everything — your calories, your eating window, all of it.</p>
+  <p class="step-sub">This shapes everything. Your calories, your eating window, all of it.</p>
   <div class="opts">
     <button class="opt-btn" onclick="pickGreen('g1','goal','lose',this)"><span class="opt-title">Lose fat</span><span class="opt-sub">Drop body fat while keeping muscle</span></button>
-    <button class="opt-btn" onclick="pickGreen('g1','goal','maintain',this)"><span class="opt-title">Maintain</span><span class="opt-sub">Stay at my current weight and composition</span></button>
-    <button class="opt-btn" onclick="pickGreen('g1','goal','gain',this)"><span class="opt-title">Build muscle</span><span class="opt-sub">Lean bulk — add size without excess fat</span></button>
+    <div class="or-divider"><span>or</span></div>
+    <button class="opt-btn" onclick="pickGreen('g1','goal','gain',this)"><span class="opt-title">Build muscle</span><span class="opt-sub">Lean bulk, add size without excess fat</span></button>
   </div>
   <div class="spacer"></div>
-  <div class="nav-row"><button class="btn-next-full" id="n1" onclick="goTo(2)" disabled>Next</button></div>
+  <div class="nav-row"><button class="btn-next-full" id="n1" onclick="afterGoal()" disabled>Next</button></div>
+</div>
+
+
+<div class="step" id="s1b" style="display:none">
+  <p class="step-label">Step 2 of 9</p>
+  <h2 class="step-title">How long have you been training?</h2>
+  <p class="step-sub">This lets me calculate a realistic muscle gain projection for you.</p>
+  <div class="opts" id="g1b">
+    <button class="opt-btn" onclick="pickGreen('g1b','experience','beginner',this)"><span class="opt-title">Just getting started</span><span class="opt-sub">Under 1 year of consistent training</span></button>
+    <button class="opt-btn" onclick="pickGreen('g1b','experience','intermediate',this)"><span class="opt-title">Some experience</span><span class="opt-sub">1 to 3 years of training</span></button>
+    <button class="opt-btn" onclick="pickGreen('g1b','experience','advanced',this)"><span class="opt-title">Pretty experienced</span><span class="opt-sub">3 or more years of consistent training</span></button>
+  </div>
+  <div class="micro-feedback" id="micro-s1b"></div>
+  <div class="spacer"></div>
+  <div class="nav-row">
+    <button class="btn-back" onclick="goTo(1)">&#8592;</button>
+    <button class="btn-next" id="n1b" onclick="goTo(2)" disabled>Next</button>
+  </div>
 </div>
 
 <div class="step" id="s2">
-  <p class="step-label">Step 2 of 9</p>
+  <p class="step-label">Step 2 of 7</p>
   <h2 class="step-title">Your stats</h2>
   <p class="step-sub">Used to calculate your basal metabolic rate.</p>
   <div class="unit-toggle">
@@ -103,7 +161,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   </div>
   <div class="input-row">
     <label id="lbl-weight">Weight (lbs)</label>
-    <input type="number" inputmode="decimal" id="weight" placeholder="e.g. 185" oninput="checkStep2()">
+    <input type="number" inputmode="decimal" id="weight" placeholder="Enter weight" oninput="checkStep2()">
   </div>
   <div class="input-row">
     <label>Height</label>
@@ -119,12 +177,18 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   </div>
   <div class="input-row">
     <label>Age</label>
-    <input type="number" inputmode="decimal" id="age" placeholder="e.g. 32" oninput="checkStep2()">
+    <input type="number" inputmode="decimal" id="age" placeholder="Enter age" oninput="checkStep2()">
   </div>
   <div class="two-col" id="g-sex">
     <button class="opt-btn" id="btn-male" onclick="pickSex('male')"><span class="opt-title">Male</span></button>
     <button class="opt-btn" id="btn-female" onclick="pickSex('female')"><span class="opt-title">Female</span></button>
   </div>
+  <div class="micro-feedback" id="micro-s1"></div>
+  <div class="micro-feedback" id="micro-s3"></div>
+  <div class="micro-feedback" id="micro-s4"></div>
+  <div class="micro-feedback" id="micro-s6"></div>
+  <div class="micro-feedback" id="micro-s7"></div>
+  <div class="micro-feedback" id="micro-s8"></div>
   <div class="spacer"></div>
   <div class="nav-row">
     <button class="btn-back" onclick="goTo(1)">&#8592;</button>
@@ -133,14 +197,14 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <div class="step" id="s3">
-  <p class="step-label">Step 3 of 9</p>
+  <p class="step-label">Step 3 of 7</p>
   <h2 class="step-title">Roughly what's your body fat?</h2>
-  <p class="step-sub">A rough range is enough — this sharpens your numbers significantly.</p>
-  <div class="opts" id="g3">
-    <button class="opt-btn" onclick="pickGreen('g3','bf','10',this)"><span class="opt-title">Very lean — under 15%</span><span class="opt-sub">Visible abs or close to it</span></button>
-    <button class="opt-btn" onclick="pickGreen('g3','bf','20',this)"><span class="opt-title">Average — 15–25%</span><span class="opt-sub">Some definition, soft around the edges</span></button>
-    <button class="opt-btn" onclick="pickGreen('g3','bf','30',this)"><span class="opt-title">Above average — 25–35%</span><span class="opt-sub">Carrying noticeable extra weight</span></button>
-    <button class="opt-btn" onclick="pickGreen('g3','bf','38',this)"><span class="opt-title">High — over 35%</span><span class="opt-sub">Significant weight to lose</span></button>
+  <p class="step-sub">A rough range is enough, this sharpens your numbers significantly.</p>
+  <div class="bf-opts" id="g3">
+    <button class="bf-btn" onclick="pickBF(this,'10')"><svg width="60" height="90" viewBox="0 0 60 90" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="10" r="8" fill="#1D9E75" opacity="0.85"/><path d="M26 18 L18 28 L21 45 L22 55 L20 65 L25 88 L35 88 L40 65 L38 55 L39 45 L42 28 L34 18 Z" fill="#1D9E75" opacity="0.85"/></svg><span class="bf-label">Very lean</span><span class="bf-sub">Under 15%, visible abs or close</span></button>
+    <button class="bf-btn" onclick="pickBF(this,'20')"><svg width="60" height="90" viewBox="0 0 60 90" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="10" r="8" fill="#2BA87E" opacity="0.85"/><path d="M26 18 L17 28 L18 45 L19 55 L18 65 L25 88 L35 88 L42 65 L41 55 L42 45 L43 28 L34 18 Z" fill="#2BA87E" opacity="0.85"/></svg><span class="bf-label">Average</span><span class="bf-sub">15 to 25%, some definition</span></button>
+    <button class="bf-btn" onclick="pickBF(this,'30')"><svg width="60" height="90" viewBox="0 0 60 90" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="10" r="8" fill="#3DB389" opacity="0.85"/><path d="M25 18 L16 28 L15 45 L15 55 L15 65 L24 88 L36 88 L45 65 L45 55 L45 45 L44 28 L35 18 Z" fill="#3DB389" opacity="0.85"/></svg><span class="bf-label">Above average</span><span class="bf-sub">25 to 35%, carrying extra weight</span></button>
+    <button class="bf-btn" onclick="pickBF(this,'38')"><svg width="60" height="90" viewBox="0 0 60 90" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="10" r="8" fill="#52BE94" opacity="0.85"/><path d="M25 18 L15 28 L11 45 L10 55 L12 65 L23 88 L37 88 L48 65 L50 55 L49 45 L45 28 L35 18 Z" fill="#52BE94" opacity="0.85"/></svg><span class="bf-label">High</span><span class="bf-sub">Over 35%, significant weight to lose</span></button>
   </div>
   <div class="spacer"></div>
   <div class="nav-row">
@@ -150,9 +214,9 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <div class="step" id="s4">
-  <p class="step-label">Step 4 of 9</p>
+  <p class="step-label">Step 4 of 7</p>
   <h2 class="step-title">How active are you?</h2>
-  <p class="step-sub">Be honest — most people overestimate this.</p>
+  <p class="step-sub">Be honest, most people overestimate this.</p>
   <div class="opts" id="g4">
     <button class="opt-btn" onclick="pickGreen('g4','activity','1.2',this)"><span class="opt-title">Sedentary</span><span class="opt-sub">Desk job, little to no exercise</span></button>
     <button class="opt-btn" onclick="pickGreen('g4','activity','1.375',this)"><span class="opt-title">Lightly active</span><span class="opt-sub">1–3 workouts per week</span></button>
@@ -162,52 +226,39 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div class="spacer"></div>
   <div class="nav-row">
     <button class="btn-back" onclick="goTo(3)">&#8592;</button>
-    <button class="btn-next" id="n4" onclick="goTo(5)" disabled>Next</button>
+    <button class="btn-next" id="n4" onclick="goTo(6)" disabled>Next</button>
   </div>
 </div>
 
-<div class="step" id="s5">
-  <p class="step-label">Step 5 of 9</p>
-  <h2 class="step-title">What time do you usually wake up?</h2>
-  <p class="step-sub">I'll build your IF window around your actual schedule, not a generic one.</p>
-  <div class="opts" id="g5">
-    <button class="opt-btn" onclick="pickGreen('g5','wake','5',this)"><span class="opt-title">Early riser — before 6am</span></button>
-    <button class="opt-btn" onclick="pickGreen('g5','wake','7',this)"><span class="opt-title">Morning person — 6–8am</span></button>
-    <button class="opt-btn" onclick="pickGreen('g5','wake','9',this)"><span class="opt-title">Mid-morning — 8–10am</span></button>
-    <button class="opt-btn" onclick="pickGreen('g5','wake','11',this)"><span class="opt-title">Late riser — after 10am</span></button>
+
+<div class="step" id="s6">
+  <p class="step-label">Step 5 of 7</p>
+  <h2 class="step-title" id="s6-title">What's your eating like now?</h2>
+  <p class="step-sub" id="s6-sub">No judgment, this tells me where you're starting from.</p>
+  <div class="opts" id="g6">
+    <button class="opt-btn" id="s6-opt1" onclick="pickGreen('g6','eating','opt1',this)"><span class="opt-title" id="s6-t1"></span><span class="opt-sub" id="s6-s1"></span></button>
+    <button class="opt-btn" id="s6-opt2" onclick="pickGreen('g6','eating','opt2',this)"><span class="opt-title" id="s6-t2"></span><span class="opt-sub" id="s6-s2"></span></button>
+    <button class="opt-btn" id="s6-opt3" onclick="pickGreen('g6','eating','opt3',this)"><span class="opt-title" id="s6-t3"></span><span class="opt-sub" id="s6-s3"></span></button>
+    <button class="opt-btn" id="s6-opt4" onclick="pickGreen('g6','eating','opt4',this)"><span class="opt-title" id="s6-t4"></span><span class="opt-sub" id="s6-s4"></span></button>
   </div>
   <div class="spacer"></div>
   <div class="nav-row">
     <button class="btn-back" onclick="goTo(4)">&#8592;</button>
-    <button class="btn-next" id="n5" onclick="goTo(6)" disabled>Next</button>
-  </div>
-</div>
-
-<div class="step" id="s6">
-  <p class="step-label">Step 6 of 9</p>
-  <h2 class="step-title">What's your eating like now?</h2>
-  <p class="step-sub">No judgment — this tells me where you're starting from.</p>
-  <div class="opts" id="g6">
-    <button class="opt-btn" onclick="pickGreen('g6','eating','no_track',this)"><span class="opt-title">I eat whatever feels right</span><span class="opt-sub">No tracking, no structure</span></button>
-    <button class="opt-btn" onclick="pickGreen('g6','eating','eat_healthy',this)"><span class="opt-title">I eat healthy but still not losing</span><span class="opt-sub">Clean food, results aren't coming</span></button>
-    <button class="opt-btn" onclick="pickGreen('g6','eating','tried_track',this)"><span class="opt-title">I've tried tracking before</span><span class="opt-sub">Couldn't stick to it long term</span></button>
-    <button class="opt-btn" onclick="pickGreen('g6','eating','tracking',this)"><span class="opt-title">I already track calories</span><span class="opt-sub">Looking to optimize</span></button>
-  </div>
-  <div class="spacer"></div>
-  <div class="nav-row">
-    <button class="btn-back" onclick="goTo(5)">&#8592;</button>
     <button class="btn-next" id="n6" onclick="goTo(7)" disabled>Next</button>
   </div>
 </div>
 
+
+
 <div class="step" id="s7">
-  <p class="step-label">Step 7 of 9</p>
-  <h2 class="step-title">Have you tried intermittent fasting?</h2>
-  <p class="step-sub">It's a key part of the system — helps make hitting your target effortless.</p>
+  <p class="step-label">Step 6 of 7</p>
+  <h2 class="step-title">Do you track your calories?</h2>
+  <p class="step-sub">No right or wrong answer here, this helps me meet you where you are.</p>
   <div class="opts" id="g7">
-    <button class="opt-btn" onclick="pickGreen('g7','if','never',this)"><span class="opt-title">Never tried it</span><span class="opt-sub">Open to learning</span></button>
-    <button class="opt-btn" onclick="pickGreen('g7','if','tried',this)"><span class="opt-title">Tried it but gave up</span><span class="opt-sub">Wasn't sure how to make it work</span></button>
-    <button class="opt-btn" onclick="pickGreen('g7','if','doing',this)"><span class="opt-title">Currently doing it</span><span class="opt-sub">Looking to optimize</span></button>
+    <button class="opt-btn" onclick="pickGreen('g7','tracking','never',this)"><span class="opt-title">Never have</span><span class="opt-sub">Not sure where to start</span></button>
+    <button class="opt-btn" onclick="pickGreen('g7','tracking','tried',this)"><span class="opt-title">I've tried it but couldn't stick to it</span><span class="opt-sub">Started strong then dropped off</span></button>
+    <button class="opt-btn" onclick="pickGreen('g7','tracking','occasionally',this)"><span class="opt-title">I track occasionally but not consistently</span><span class="opt-sub">On and off depending on motivation</span></button>
+    <button class="opt-btn" onclick="pickGreen('g7','tracking','yes',this)"><span class="opt-title">Yes I track already</span><span class="opt-sub">Looking to optimize my approach</span></button>
   </div>
   <div class="spacer"></div>
   <div class="nav-row">
@@ -217,14 +268,14 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <div class="step" id="s8">
-  <p class="step-label">Step 8 of 9</p>
-  <h2 class="step-title">What's your biggest struggle?</h2>
-  <p class="step-sub">Pick the one that hits closest to home.</p>
+  <p class="step-label">Step 7 of 7</p>
+  <h2 class="step-title" id="s8-title">What's your biggest struggle?</h2>
+  <p class="step-sub" id="s8-sub">Pick the one that hits closest to home.</p>
   <div class="opts" id="g8">
-    <button class="opt-btn" onclick="pickGreen('g8','struggle','hunger',this)"><span class="opt-title">I get too hungry when I cut calories</span></button>
-    <button class="opt-btn" onclick="pickGreen('g8','struggle','social',this)"><span class="opt-title">Social eating kills my consistency</span></button>
-    <button class="opt-btn" onclick="pickGreen('g8','struggle','cooking',this)"><span class="opt-title">I don't know what meals to eat</span></button>
-    <button class="opt-btn" onclick="pickGreen('g8','struggle','willpower',this)"><span class="opt-title">I start strong then fall off after a week</span></button>
+    <button class="opt-btn" id="s8-opt1" onclick="pickGreen('g8','struggle','opt1',this)"><span class="opt-title" id="s8-t1"></span><span class="opt-sub" id="s8-s1"></span></button>
+    <button class="opt-btn" id="s8-opt2" onclick="pickGreen('g8','struggle','opt2',this)"><span class="opt-title" id="s8-t2"></span><span class="opt-sub" id="s8-s2"></span></button>
+    <button class="opt-btn" id="s8-opt3" onclick="pickGreen('g8','struggle','opt3',this)"><span class="opt-title" id="s8-t3"></span><span class="opt-sub" id="s8-s3"></span></button>
+    <button class="opt-btn" id="s8-opt4" onclick="pickGreen('g8','struggle','opt4',this)"><span class="opt-title" id="s8-t4"></span><span class="opt-sub" id="s8-s4"></span></button>
   </div>
   <div class="spacer"></div>
   <div class="nav-row">
@@ -234,7 +285,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <div class="step" id="s9">
-  <p class="step-label">Step 9 of 9</p>
+  <p class="step-label">Step 7 of 7</p>
   <h2 class="step-title">Your fat loss target</h2>
   <p class="step-sub">This lets me calculate your exact deficit and a realistic goal date.</p>
   <div class="input-row">
@@ -245,26 +296,27 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <label>How fast do you want to lose it?</label>
     <select id="pace" onchange="checkStep9()">
       <option value="">Select a pace...</option>
-      <option value="0.5">Slow &amp; steady — 0.5 lb / week</option>
-      <option value="1">Moderate — 1 lb / week</option>
-      <option value="1.5">Faster — 1.5 lbs / week</option>
-      <option value="2">Aggressive — 2 lbs / week</option>
+      <option value="0.5">Slow and steady, 0.5 lb per week</option>
+      <option value="1">Moderate, 1 lb per week</option>
+      <option value="1.5">Faster, 1.5 lbs per week</option>
+      <option value="2">Aggressive, 2 lbs per week</option>
     </select>
-    <p class="warn-inline" id="pace-warn">That pace would drop your calories too low — I'll adjust to a safe minimum.</p>
+    <p class="warn-inline" id="pace-warn">That pace would drop your calories too low. I'll adjust to a safe minimum.</p>
   </div>
   <div class="spacer"></div>
   <div class="nav-row">
     <button class="btn-back" onclick="goTo(8)">&#8592;</button>
-    <button class="btn-next" id="n9" onclick="goTo(10)" disabled>Next</button>
+    <button class="btn-next" id="n9" onclick="goTo(11)" disabled>Next</button>
   </div>
 </div>
 
-<div class="step" id="s10">
+<div class="step" id="s11" style="display:none">
   <p class="step-label">Your results</p>
   <h2 class="step-title">Here's where you stand</h2>
   <div class="result-big">
     <div class="val" id="r-tdee">—</div>
     <div class="lbl">Daily maintenance calories</div>
+    <div class="tdee-explain">This is how many calories your body needs every day just to stay at your current weight. Eat less than this and you lose fat. Eat more and you build muscle.</div>
   </div>
   <div class="gate-box" id="gate-box">
     <p>Enter your details and I'll send your <strong>exact calorie target</strong>, <strong>personalised IF window</strong>, <strong>goal date</strong>, and the <strong>3 meals I eat to stay on track without feeling restricted.</strong></p>
@@ -275,12 +327,19 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   </div>
   <div class="success-section" id="success-section">
     <div class="celebrate" id="celebrate-msg"></div>
-    <div class="metrics-grid">
+    <div class="metrics-grid" id="metrics-lose">
       <div class="metric-card"><div class="mv" id="r-target">—</div><div class="ml">Daily target</div></div>
       <div class="metric-card"><div class="mv" id="r-date">—</div><div class="ml">Goal date</div></div>
       <div class="metric-card"><div class="mv" id="r-deficit">—</div><div class="ml">Daily deficit</div></div>
       <div class="metric-card"><div class="mv" id="r-weeks">—</div><div class="ml">Weeks to goal</div></div>
     </div>
+    <div class="metrics-grid" id="metrics-gain" style="display:none">
+      <div class="metric-card"><div class="mv" id="r-surplus">—</div><div class="ml">Daily surplus</div></div>
+      <div class="metric-card"><div class="mv" id="r-daily-cals">—</div><div class="ml">Daily calories</div></div>
+      <div class="metric-card"><div class="mv" id="r-muscle-month">—</div><div class="ml">Lbs muscle / month</div></div>
+      <div class="metric-card"><div class="mv" id="r-muscle-6mo">—</div><div class="ml">Projected in 6 months</div></div>
+    </div>
+    <div class="explain-card" id="explain-card"></div>
     <div class="if-card" id="if-window"></div>
     <div class="warn-card" id="warning-box"></div>
     <div class="timeline-card" id="timeline-box"></div>
@@ -288,7 +347,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   </div>
   <div class="spacer"></div>
   <div class="nav-row" style="padding-top:16px">
-    <button class="btn-back" id="back-final" onclick="goTo(9)">&#8592;</button>
+    <button class="btn-back" id="back-final" onclick="backFromResults()">&#8592;</button>
   </div>
 </div>
 
@@ -298,8 +357,16 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 <script>
 var answers={};
 var unit='imperial';
-var TOTAL=10;
+var TOTAL=11;
 
+function startCalc(){
+  document.getElementById('s0').classList.remove('active');
+  document.getElementById('s0').style.display='none';
+  var s1=document.getElementById('s1');
+  s1.classList.add('active');
+  s1.style.display='flex';
+  document.getElementById('prog').style.width='11%';
+}
 function pickGreen(gridId,key,val,el){
   var containers=[document.getElementById(gridId),el.closest('.opts'),el.closest('.two-col')];
   for(var i=0;i<containers.length;i++){
@@ -307,8 +374,21 @@ function pickGreen(gridId,key,val,el){
   }
   el.classList.add('sel-green');
   answers[key]=val;
+  showMicro(key,val);
   var stepEl=el.closest('.step');
-  if(stepEl){var sNum=parseInt(stepEl.id.replace('s',''));var nb=document.getElementById('n'+sNum);if(nb)nb.disabled=false;}
+  if(stepEl){
+    var rawId=stepEl.id.replace('s','');
+    var nb=document.getElementById('n'+rawId);
+    if(nb)nb.disabled=false;
+  }
+}
+
+function pickBF(el,val){
+  document.getElementById('g3').querySelectorAll('.bf-btn').forEach(function(b){b.classList.remove('sel-green');});
+  el.classList.add('sel-green');
+  answers['bf']=val;
+  showMicro('bf',val);
+  document.getElementById('n3').disabled=false;
 }
 
 function pickSex(val){
@@ -362,14 +442,11 @@ function calcTDEE(){
 }
 
 function getIFWindow(){
-  var wake=parseInt(answers['wake']||'7');
   var goal=answers['goal'];
   var fastHours=goal==='gain'?14:16;
   var eatHours=24-fastHours;
-  var startHour=wake+4;
-  var endHour=startHour+eatHours;
-  function fmt(h){var hh=h%24;var p=hh>=12?'pm':'am';var d=hh>12?hh-12:(hh===0?12:hh);return d+p;}
-  return{start:fmt(startHour),end:fmt(endHour),hours:fastHours,eat:eatHours};
+  if(goal==='gain') return{start:'10am',end:'8pm',hours:14,eat:10};
+  return{start:'12pm',end:'8pm',hours:16,eat:8};
 }
 
 function getGoalDate(weeks){
@@ -377,20 +454,140 @@ function getGoalDate(weeks){
   return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 }
 
+
+
+
+function afterGoal(){
+  if(answers['goal']==='gain'){
+    goTo('1b');
+  } else {
+    goTo(2);
+  }
+}
+
+function renderStep8() {
+  var goal = answers['goal'];
+  if (goal === 'gain') {
+    document.getElementById('s8-title').textContent = "What makes hitting your calories hardest?";
+    document.getElementById('s8-sub').textContent = "Pick the one that holds you back the most.";
+    document.getElementById('s8-t1').textContent = "I never feel hungry enough to eat more";
+    document.getElementById('s8-s1').textContent = "My appetite just isn't there";
+    document.getElementById('s8-t2').textContent = "I don't know which foods to eat for muscle";
+    document.getElementById('s8-s2').textContent = "Not sure what actually works for building";
+    document.getElementById('s8-t3').textContent = "I eat a lot but see more fat than muscle";
+    document.getElementById('s8-s3').textContent = "Gaining but not in the right places";
+    document.getElementById('s8-t4').textContent = "I start bulking then stop when I feel soft";
+    document.getElementById('s8-s4').textContent = "Consistency breaks down when I see fat gain";
+  } else {
+    document.getElementById('s8-title').textContent = "What\'s your biggest struggle?";
+    document.getElementById('s8-sub').textContent = "Pick the one that hits closest to home.";
+    document.getElementById('s8-t1').textContent = "I get too hungry when I cut calories";
+    document.getElementById('s8-s1').textContent = "Restriction makes me want to quit";
+    document.getElementById('s8-t2').textContent = "Social eating kills my consistency";
+    document.getElementById('s8-s2').textContent = "Restaurants and events throw me off";
+    document.getElementById('s8-t3').textContent = "I don\'t know what meals to eat";
+    document.getElementById('s8-s3').textContent = "No idea what to cook or order";
+    document.getElementById('s8-t4').textContent = "I start strong then fall off after a week";
+    document.getElementById('s8-s4').textContent = "Motivation fades and I lose my streak";
+  }
+  document.getElementById('g8').querySelectorAll('.opt-btn').forEach(function(b){
+    b.classList.remove('sel-green','sel-blue','sel-pink');
+  });
+  delete answers['struggle'];
+  document.getElementById('n8').disabled = true;
+}
+
+function renderStep6() {
+  var goal = answers['goal'];
+  if (goal === 'gain') {
+    document.getElementById('s6-title').textContent = "What's your biggest challenge with gaining muscle?";
+    document.getElementById('s6-sub').textContent = "Be honest, this helps me tailor your plan to where you actually struggle.";
+    document.getElementById('s6-t1').textContent = "I eat whatever, no real structure";
+    document.getElementById('s6-s1').textContent = "No plan, just eating when I feel like it";
+    document.getElementById('s6-t2').textContent = "I eat healthy but struggle to eat enough";
+    document.getElementById('s6-s2').textContent = "Clean food but can't hit the volume I need";
+    document.getElementById('s6-t3').textContent = "I eat big meals but they're mostly junk";
+    document.getElementById('s6-s3').textContent = "Hitting volume but not the right foods";
+    document.getElementById('s6-t4').textContent = "I eat well during the week but fall off on weekends";
+    document.getElementById('s6-s4').textContent = "Consistency is the issue";
+  } else {
+    document.getElementById('s6-title').textContent = "What's your eating like now?";
+    document.getElementById('s6-sub').textContent = "No judgment, this tells me where you're starting from.";
+    document.getElementById('s6-t1').textContent = "I eat whatever feels right";
+    document.getElementById('s6-s1').textContent = "No structure, no real plan";
+    document.getElementById('s6-t2').textContent = "I eat healthy but still not seeing results";
+    document.getElementById('s6-s2').textContent = "Clean food, but nothing is changing";
+    document.getElementById('s6-t3').textContent = "I skip meals then overeat at night";
+    document.getElementById('s6-s3').textContent = "My eating is all over the place";
+    document.getElementById('s6-t4').textContent = "I eat well during the week but fall off on weekends";
+    document.getElementById('s6-s4').textContent = "Consistency is the issue";
+  }
+  // Reset selection and disable next when re-rendering
+  document.getElementById('g6').querySelectorAll('.opt-btn').forEach(function(b){
+    b.classList.remove('sel-green','sel-blue','sel-pink');
+  });
+  delete answers['eating'];
+  document.getElementById('n6').disabled = true;
+}
+
+
+var microMessages = {
+  goal: { lose: "Good choice. Let's find your number.", maintain: "Smart move. Knowing your baseline changes everything.", gain: "Let's build your blueprint." },
+  experience: { beginner: "Perfect time to start. Beginners gain the fastest.", intermediate: "Solid base. You still have plenty of room to grow.", advanced: "Experienced lifters build slower but smarter." },
+  bf: { '10': "Nice, that helps a lot with accuracy.", '20': "Got it, most people fall here.", '30': "Noted, your numbers will reflect this.", '38': "No problem, this is exactly what the calculator is for." },
+  activity: { '1.2': "Honest answer. Most people overestimate this.", '1.375': "Good, a little activity goes a long way.", '1.55': "Solid, that changes your numbers meaningfully.", '1.725': "That's a lot of output. Your numbers will reflect it." },
+  eating: { opt1: "No worries, that's what we're here to fix.", opt2: "This is the most common story. You're not alone.", opt3: "That's actually a really common pattern.", opt4: "Weekends are where most people lose their progress." },
+  tracking: { never: "No problem, we'll keep it simple.", tried: "It's easier with the right target. Let's get you one.", occasionally: "Consistency gets a lot easier once the number clicks.", yes: "Perfect, let's sharpen what you already know." },
+  struggle: {
+    opt1: "That's more common than you think. We can work around it.",
+    opt2: "You can eat out and still hit your goals.",
+    opt3: "We'll sort that out in your plan.",
+    opt4: "It's not about willpower when the system is right."
+  }
+};
+
+function showMicro(key, val) {
+  var msg = microMessages[key] && microMessages[key][val];
+  if (!msg) return;
+  // Find active step's micro div
+  var activeStep = document.querySelector('.step.active');
+  if (!activeStep) return;
+  var micro = activeStep.querySelector('.micro-feedback');
+  if (!micro) return;
+  micro.textContent = msg;
+  micro.classList.add('show');
+}
+
 function goTo(n){
-  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.step').forEach(function(s){
+    s.classList.remove('active');
+    s.style.display='none';
+  });
   var el=document.getElementById('s'+n);
-  if(el){el.classList.add('active');}
-  document.getElementById('prog').style.width=Math.round((Math.min(n,TOTAL)/TOTAL)*100)+'%';
-  if(n===10)showMaintenance();
+  if(el){
+    el.classList.add('active');
+    el.style.display= (n===11 || n==='11') ? 'block' : 'flex';
+  }
+  var progN = (n==='1b') ? 1.5 : n;
+  document.getElementById('prog').style.width=Math.round((Math.min(progN,TOTAL)/TOTAL)*100)+'%';
+  if(n===11||n==='11')showMaintenance();
+  if(n===6)renderStep6();
+  if(n===8)renderStep8();
   window.scrollTo(0,0);
 }
 
+function backFromResults(){
+  goTo(answers['goal']==='lose'?9:8);
+}
+
 function afterStruggle(){
-  if(answers['goal']==='lose') goTo(9); else goTo(10);
+  if(answers['goal']==='lose') goTo(9); else goTo(11);
 }
 
 function showMaintenance(){
+  var el=document.getElementById('s11');
+  el.style.display='block';
+  el.style.overflowY='auto';
   document.getElementById('r-tdee').textContent=calcTDEE().toLocaleString();
   document.getElementById('back-final').onclick=function(){goTo(answers['goal']==='lose'?9:8);};
 }
@@ -403,51 +600,98 @@ function submitEmail(){
   var tdee=calcTDEE();
   var goal=answers['goal'];
   var floor=answers['sex']==='female'?1200:1500;
-  var target,weeks,deficit,dateStr,ifText,timelineText,actionText,warnText='';
   var ifWin=getIFWindow();
-  var ifStr=ifWin.hours+':'+ifWin.eat+' — eat between '+ifWin.start+' and '+ifWin.end;
+  var ifStr=ifWin.hours+':'+ifWin.eat+', eat between '+ifWin.start+' and '+ifWin.end;
+  var target,weeks,deficit,dateStr,ifText,timelineText,actionText,warnText='';
+
   if(goal==='lose'){
-    var pace=parseFloat(document.getElementById('pace').value);
-    var fatLbs=parseFloat(document.getElementById('fat-lbs').value);
+    // ── LOSE FAT ──────────────────────────────────────────
+    document.getElementById('metrics-lose').style.display='grid';
+    document.getElementById('metrics-gain').style.display='none';
+    var paceEl=document.getElementById('pace');
+    var fatLbsEl=document.getElementById('fat-lbs');
+    var pace=paceEl?parseFloat(paceEl.value):1;
+    var fatLbs=fatLbsEl?parseFloat(fatLbsEl.value):20;
+    if(isNaN(pace)||pace<=0) pace=1;
+    if(isNaN(fatLbs)||fatLbs<=0) fatLbs=20;
     var dailyDef=Math.round(pace*3500/7);
     var rawTarget=tdee-dailyDef;
     var safeTarget=Math.max(rawTarget,floor);
     var adjustedDef=tdee-safeTarget;
     var adjustedPace=(adjustedDef*7)/3500;
-    deficit=adjustedDef;target=safeTarget;
+    deficit=adjustedDef; target=safeTarget;
     weeks=Math.round(fatLbs/adjustedPace);
     dateStr=getGoalDate(weeks);
-    if(safeTarget>rawTarget)warnText='Your chosen pace would drop calories below a safe level. I\'ve adjusted your target to '+safeTarget.toLocaleString()+' cal to protect your muscle and metabolism.';
+    if(safeTarget>rawTarget) warnText='Your chosen pace would drop calories below a safe level. I\'ve adjusted your target to '+safeTarget.toLocaleString()+' cal to protect your muscle and metabolism.';
     ifText='Your IF window: '+ifStr+'. Built around your wake time so it works with your body clock, not against it.';
-    var smap={
-      hunger:'Since hunger is your biggest challenge — I\'ll send you my top 5 high-volume meals that keep you full on '+safeTarget.toLocaleString()+' calories. Big portions, real food, zero suffering.',
-      social:'Since social eating trips you up — I\'ll include my simple guide to eating out and staying on track without being that person at the table.',
-      cooking:'Since you\'re not sure what to eat — I\'ll send you my exact weekly meal rotation. 7 days of meals that fit your '+safeTarget.toLocaleString()+' cal target, all under 30 minutes to make.',
-      willpower:'Since consistency is your challenge — I\'ll share the exact system I use to stay on track when motivation is zero. It has nothing to do with willpower.'
+    var smapLose={
+      opt1:'Since hunger is your biggest challenge, I\'ll send you my top 5 high-volume meals that keep you full on '+safeTarget.toLocaleString()+' calories. Big portions, real food, zero suffering.',
+      opt2:'Since social eating trips you up, I\'ll include my simple guide to eating out and staying on track without being that person at the table.',
+      opt3:'Since you\'re not sure what to eat, I\'ll send you my exact weekly meal rotation. 7 days of meals that fit your '+safeTarget.toLocaleString()+' cal target, all under 30 minutes to make.',
+      opt4:'Since consistency is your challenge, I\'ll share the exact system I use to stay on track when motivation is zero. It has nothing to do with willpower.'
     };
-    actionText=smap[answers['struggle']]||'Your full personalised plan is on its way.';
-    timelineText='At a '+adjustedDef+' cal/day deficit you\'ll reach your goal by '+dateStr+' — that\'s ~'+weeks+' weeks away. Totally doable with the right system.';
+    actionText=smapLose[answers['struggle']]||'Your full personalised plan is on its way.';
+    timelineText='At a '+adjustedDef+' cal/day deficit you\'ll reach your goal by '+dateStr+' and that is ~'+weeks+' weeks away. Totally doable with the right system.';
+    document.getElementById('r-target').textContent=safeTarget.toLocaleString();
+    document.getElementById('r-date').textContent=dateStr;
+    document.getElementById('r-deficit').textContent=adjustedDef+' cal';
+    document.getElementById('r-weeks').textContent=weeks+' wks';
+
   }else if(goal==='gain'){
-    target=tdee+300;deficit=300;weeks=null;dateStr='—';
+    // ── BUILD MUSCLE ──────────────────────────────────────
+    document.getElementById('metrics-lose').style.display='none';
+    document.getElementById('metrics-gain').style.display='grid';
+    var surplus=300;
+    var dailyCals=tdee+surplus;
+    var expMap={beginner:1.5,intermediate:0.75,advanced:0.35};
+    var monthlyGain=expMap[answers['experience']]||0.75;
+    var sixMoGain=(monthlyGain*6).toFixed(1);
+    document.getElementById('r-surplus').textContent=surplus+' cal';
+    document.getElementById('r-daily-cals').textContent=dailyCals.toLocaleString();
+    document.getElementById('r-muscle-month').textContent=monthlyGain+' lb';
+    document.getElementById('r-muscle-6mo').textContent=sixMoGain+' lbs';
     ifText='Your IF window: '+ifStr+'. A wider eating window makes hitting your surplus comfortable without forcing food.';
-    timelineText='A 300 cal/day surplus keeps your bulk lean — enough to build muscle without excess fat gain.';
-    actionText='I\'ll send you my high-protein meal rotation designed for a lean bulk — real food that makes hitting your surplus easy and enjoyable.';
+    timelineText='At a '+surplus+' cal/day surplus you can expect to gain around '+monthlyGain+' lb of muscle per month. Over 6 months that is up to '+sixMoGain+' lbs of lean muscle with consistent training.';
+    var smapGain={
+      opt1:'Since appetite is your challenge, I\'ll send you my top calorie-dense meals that pack in nutrition without making you feel stuffed.',
+      opt2:'Since you\'re not sure what to eat for muscle, I\'ll send you my exact bulking meal rotation with the foods that actually move the needle.',
+      opt3:'Since you\'re gaining fat instead of muscle, I\'ll share how to hit your surplus with the right foods so you build lean, not soft.',
+      opt4:'Since consistency breaks you, I\'ll share the exact approach I use to stay in a clean surplus without panicking when the scale moves.'
+    };
+    actionText=smapGain[answers['struggle']]||'I\'ll send you my high-protein meal rotation designed for a lean bulk. Real food that makes hitting your surplus easy.';
+
   }else{
-    target=tdee;deficit=0;weeks=null;dateStr='—';
+    // ── MAINTAIN ──────────────────────────────────────────
+    document.getElementById('metrics-lose').style.display='grid';
+    document.getElementById('metrics-gain').style.display='none';
+    target=tdee; deficit=0; weeks=null; dateStr='—';
+    document.getElementById('r-target').textContent=tdee.toLocaleString();
+    document.getElementById('r-date').textContent='—';
+    document.getElementById('r-deficit').textContent='0 cal';
+    document.getElementById('r-weeks').textContent='—';
     ifText='Your IF window: '+ifStr+'. Keeps your maintenance calories on autopilot without constant tracking.';
     timelineText='Maintenance is about consistency over perfection. Hitting your number most days is what compounds into real long-term results.';
-    actionText='I\'ll send you my maintenance meal framework — how to eat freely and satisfyingly without accidentally drifting into a surplus.';
+    actionText='I\'ll send you my maintenance meal framework. How to eat freely and satisfyingly without accidentally drifting into a surplus.';
   }
-  document.getElementById('r-target').textContent=target.toLocaleString();
-  document.getElementById('r-deficit').textContent=deficit?deficit+' cal':'—';
-  document.getElementById('r-weeks').textContent=weeks?weeks+' wks':'—';
-  document.getElementById('r-date').textContent=dateStr;
+
+  // ── SHARED RESULTS ────────────────────────────────────
+  document.getElementById('r-tdee').textContent=tdee.toLocaleString();
   document.getElementById('if-window').textContent=ifText;
   document.getElementById('timeline-box').textContent=timelineText;
   var wb=document.getElementById('warning-box');
   if(warnText){wb.textContent=warnText;wb.style.display='block';}
   document.getElementById('action-box').innerHTML='<strong>What\'s coming to you, '+firstName+'</strong>'+actionText;
-  document.getElementById('celebrate-msg').textContent='You\'re all set, '+firstName+'. Here\'s a preview of your numbers — full plan is on its way to your inbox.';
+  document.getElementById('celebrate-msg').textContent='You\'re all set, '+firstName+'. Here\'s a preview of your numbers. Your full plan is on its way to your inbox.';
+
+  var explainHTML='';
+  if(goal==='lose'){
+    explainHTML='<strong>What is a calorie deficit?</strong>A deficit means you are eating less calories than your body burns each day. That gap is what forces your body to burn stored fat for energy. You are not starving yourself, you are just giving your body a reason to use what it already has.';
+  }else if(goal==='gain'){
+    explainHTML='<strong>What is a calorie surplus?</strong>A surplus means you are eating more calories than your body burns each day. That extra fuel is what gives your muscles the energy they need to grow. Without it, your body has nothing to build with no matter how hard you train.';
+  }else{
+    explainHTML='<strong>What does maintenance mean?</strong>Maintenance means eating exactly what your body burns each day. You will not lose fat and you will not gain fat. It is the baseline your body needs just to function, and the number everything else is built around.';
+  }
+  document.getElementById('explain-card').innerHTML=explainHTML;
   document.getElementById('gate-box').style.display='none';
   document.getElementById('success-section').style.display='block';
   document.getElementById('send-btn').disabled=true;
