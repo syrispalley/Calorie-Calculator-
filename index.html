@@ -692,6 +692,55 @@ function submitEmail(){
     explainHTML='<strong>What does maintenance mean?</strong>Maintenance means eating exactly what your body burns each day. You will not lose fat and you will not gain fat. It is the baseline your body needs just to function, and the number everything else is built around.';
   }
   document.getElementById('explain-card').innerHTML=explainHTML;
+  // ── KLAVIYO EMAIL CAPTURE ─────────────────────────────
+  var KLAVIYO_PUBLIC_KEY = 'TizjNm';
+  var KLAVIYO_LIST_ID = 'XCg9Px';
+
+  var properties = {
+    goal: answers['goal'] || '',
+    experience: answers['experience'] || '',
+    body_fat: answers['bf'] || '',
+    eating_habits: answers['eating'] || '',
+    calorie_tracking: answers['tracking'] || '',
+    struggle: answers['struggle'] || '',
+    tdee: tdee,
+    daily_target: goal === 'lose' ? target : (goal === 'gain' ? tdee + 300 : tdee)
+  };
+
+  var payload = {
+    data: {
+      type: 'subscription',
+      attributes: {
+        profile: {
+          data: {
+            type: 'profile',
+            attributes: {
+              email: email,
+              first_name: firstName,
+              properties: properties
+            }
+          }
+        },
+        list_id: KLAVIYO_LIST_ID
+      }
+    }
+  };
+
+  fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + KLAVIYO_PUBLIC_KEY, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'revision': '2023-12-15'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(function(res) {
+    console.log('Klaviyo status:', res.status);
+  })
+  .catch(function(err) {
+    console.log('Klaviyo error:', err);
+  });
+
   document.getElementById('gate-box').style.display='none';
   document.getElementById('success-section').style.display='block';
   document.getElementById('send-btn').disabled=true;
