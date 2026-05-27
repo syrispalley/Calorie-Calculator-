@@ -696,32 +696,45 @@ function submitEmail(){
   var KLAVIYO_PUBLIC_KEY = 'TizjNm';
   var KLAVIYO_LIST_ID = 'XCg9Px';
 
-  var properties = {
-    goal: answers['goal'] || '',
-    experience: answers['experience'] || '',
-    body_fat: answers['bf'] || '',
-    eating_habits: answers['eating'] || '',
-    calorie_tracking: answers['tracking'] || '',
-    struggle: answers['struggle'] || '',
-    tdee: tdee,
-    daily_target: goal === 'lose' ? target : (goal === 'gain' ? tdee + 300 : tdee)
-  };
-
-  var payload = {
+  var klaviyoPayload = {
     data: {
       type: 'subscription',
       attributes: {
+        custom_source: 'Calorie Calculator',
         profile: {
           data: {
             type: 'profile',
             attributes: {
               email: email,
               first_name: firstName,
-              properties: properties
+              properties: {
+                goal: answers['goal'] || '',
+                experience: answers['experience'] || '',
+                body_fat: answers['bf'] || '',
+                eating_habits: answers['eating'] || '',
+                calorie_tracking: answers['tracking'] || '',
+                struggle: answers['struggle'] || '',
+                tdee: tdee,
+                daily_target: goal==='lose' ? target : (goal==='gain' ? tdee+300 : tdee)
+              },
+              subscriptions: {
+                email: {
+                  marketing: {
+                    consent: 'SUBSCRIBED'
+                  }
+                }
+              }
             }
           }
-        },
-        list_id: KLAVIYO_LIST_ID
+        }
+      },
+      relationships: {
+        list: {
+          data: {
+            type: 'list',
+            id: KLAVIYO_LIST_ID
+          }
+        }
       }
     }
   };
@@ -732,10 +745,14 @@ function submitEmail(){
       'Content-Type': 'application/json',
       'revision': '2023-12-15'
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(klaviyoPayload)
   })
   .then(function(res) {
     console.log('Klaviyo status:', res.status);
+    return res.text();
+  })
+  .then(function(body) {
+    if(body) console.log('Klaviyo response:', body);
   })
   .catch(function(err) {
     console.log('Klaviyo error:', err);
