@@ -716,13 +716,6 @@ function submitEmail(){
                 struggle: answers['struggle'] || '',
                 tdee: tdee,
                 daily_target: goal==='lose' ? target : (goal==='gain' ? tdee+300 : tdee)
-              },
-              subscriptions: {
-                email: {
-                  marketing: {
-                    consent: 'SUBSCRIBED'
-                  }
-                }
               }
             }
           }
