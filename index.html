@@ -59,6 +59,7 @@ html,body{min-height:100%;background:#f5f5f0;font-family:-apple-system,BlinkMacS
 .result-big{text-align:center;padding:28px 0 20px;color:#1a1a18}
 .result-big .val{font-size:56px;font-weight:700;color:#0F6E56;line-height:1;letter-spacing:-2px}
 .result-big .lbl{font-size:14px;color:#5f5e5a;margin-top:8px;font-weight:500}
+.maintenance-desc{font-size:14px;color:#5f5e5a;line-height:1.65;text-align:center;margin:12px 0 20px;padding:0 4px}
 .tdee-explain{font-size:13px;color:#5f5e5a;margin-top:10px;line-height:1.6;padding:0 8px}
 .intro-screen{display:flex;flex-direction:column;flex:1;justify-content:center;align-items:center;text-align:center;padding:20px 0}
 .intro-icon{width:72px;height:72px;background:#E1F5EE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 28px}
@@ -316,8 +317,8 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div class="result-big">
     <div class="val" id="r-tdee">—</div>
     <div class="lbl">Daily maintenance calories</div>
-    <div class="tdee-explain">This is how many calories your body needs every day just to stay at your current weight. Eat less than this and you lose fat. Eat more and you build muscle.</div>
   </div>
+  <p class="maintenance-desc">This is how many calories your body needs every day just to stay at your current weight. Eat less than this and you lose fat. Eat more and you build muscle.</p>
   <div class="gate-box" id="gate-box">
     <p>Enter your details and I'll send your <strong>exact calorie target</strong>, <strong>personalised IF window</strong>, <strong>goal date</strong>, and the <strong>3 meals I eat to stay on track without feeling restricted.</strong></p>
     <input type="text" id="name-input" placeholder="First name" inputmode="text" autocomplete="given-name">
@@ -326,7 +327,6 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <p class="social-proof">Join 2,400+ people who've used this calculator</p>
   </div>
   <div class="success-section" id="success-section">
-    <div class="celebrate" id="celebrate-msg"></div>
     <div class="metrics-grid" id="metrics-lose">
       <div class="metric-card"><div class="mv" id="r-target">—</div><div class="ml">Daily target</div></div>
       <div class="metric-card"><div class="mv" id="r-date">—</div><div class="ml">Goal date</div></div>
@@ -339,17 +339,14 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
       <div class="metric-card"><div class="mv" id="r-muscle-month">—</div><div class="ml">Lbs muscle / month</div></div>
       <div class="metric-card"><div class="mv" id="r-muscle-6mo">—</div><div class="ml">Projected in 6 months</div></div>
     </div>
-    <div class="explain-card" id="explain-card"></div>
-    <div class="if-card" id="if-window"></div>
-    <div class="warn-card" id="warning-box"></div>
-    <div class="timeline-card" id="timeline-box"></div>
-    <div class="action-card" id="action-box"></div>
+    <div class="celebrate" id="celebrate-msg"></div>
   </div>
   <div class="spacer"></div>
   <div class="nav-row" style="padding-top:16px">
     <button class="btn-back" id="back-final" onclick="backFromResults()">&#8592;</button>
   </div>
 </div>
+
 
 </div>
 </div>
@@ -596,7 +593,7 @@ function submitEmail(){
   var name=document.getElementById('name-input').value.trim();
   var email=document.getElementById('email-input').value.trim();
   if(!name||!email||!email.includes('@'))return;
-  var firstName=name.split(' ')[0];
+  var firstName=name.split(' ')[0]; firstName=firstName.charAt(0).toUpperCase()+firstName.slice(1).toLowerCase();
   var tdee=calcTDEE();
   var goal=answers['goal'];
   var floor=answers['sex']==='female'?1200:1500;
@@ -676,12 +673,9 @@ function submitEmail(){
 
   // ── SHARED RESULTS ────────────────────────────────────
   document.getElementById('r-tdee').textContent=tdee.toLocaleString();
-  document.getElementById('if-window').textContent=ifText;
-  document.getElementById('timeline-box').textContent=timelineText;
   var wb=document.getElementById('warning-box');
   if(warnText){wb.textContent=warnText;wb.style.display='block';}
-  document.getElementById('action-box').innerHTML='<strong>What\'s coming to you, '+firstName+'</strong>'+actionText;
-  document.getElementById('celebrate-msg').textContent='You\'re all set, '+firstName+'. Here\'s a preview of your numbers. Your full plan is on its way to your inbox.';
+  document.getElementById('celebrate-msg').textContent=firstName+', you just took the first real step. Your full plan is waiting in your inbox.';
 
   var explainHTML='';
   if(goal==='lose'){
@@ -691,7 +685,6 @@ function submitEmail(){
   }else{
     explainHTML='<strong>What does maintenance mean?</strong>Maintenance means eating exactly what your body burns each day. You will not lose fat and you will not gain fat. It is the baseline your body needs just to function, and the number everything else is built around.';
   }
-  document.getElementById('explain-card').innerHTML=explainHTML;
   // ── KLAVIYO EMAIL CAPTURE ─────────────────────────────
   var KLAVIYO_PUBLIC_KEY = 'TizjNm';
   var KLAVIYO_LIST_ID = 'XCg9Px';
@@ -715,7 +708,8 @@ function submitEmail(){
                 calorie_tracking: answers['tracking'] || '',
                 struggle: answers['struggle'] || '',
                 tdee: tdee,
-                daily_target: goal==='lose' ? target : (goal==='gain' ? tdee+300 : tdee)
+                daily_target: goal==='lose' ? target : (goal==='gain' ? tdee+300 : tdee),
+                daily_deficit: goal==='lose' ? deficit : (goal==='gain' ? 300 : 0)
               }
             }
           }
