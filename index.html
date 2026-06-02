@@ -291,7 +291,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <p class="step-sub">This lets me calculate your exact deficit and a realistic goal date.</p>
   <div class="input-row">
     <label>How many lbs do you want to lose?</label>
-    <input type="number" inputmode="decimal" id="fat-lbs" placeholder="e.g. 20" min="1" max="300" oninput="checkStep9()">
+    <input type="number" inputmode="decimal" id="fat-lbs" placeholder="lbs" min="1" max="300" oninput="checkStep9()">
   </div>
   <div class="input-row">
     <label>How fast do you want to lose it?</label>
@@ -312,13 +312,14 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 </div>
 
 <div class="step" id="s11" style="display:none">
+  <div id="results-top">
   <p class="step-label">Your results</p>
   <h2 class="step-title">Here's where you stand</h2>
   <div class="result-big">
     <div class="val" id="r-tdee">—</div>
     <div class="lbl">Daily maintenance calories</div>
   </div>
-  <p class="maintenance-desc">This is how many calories your body needs every day just to stay at your current weight. Eat less than this and you lose fat. Eat more and you build muscle.</p>
+  </div>
   <div class="gate-box" id="gate-box">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
       <div style="width:44px;height:44px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:700;color:#085041;">S</div>
@@ -334,19 +335,23 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <p class="social-proof">Join 2,400+ people who've used this calculator</p>
   </div>
   <div class="success-section" id="success-section">
-    <div class="metrics-grid" id="metrics-lose">
-      <div class="metric-card"><div class="mv" id="r-target">—</div><div class="ml">Daily target</div></div>
-      <div class="metric-card"><div class="mv" id="r-date">—</div><div class="ml">Goal date</div></div>
-      <div class="metric-card"><div class="mv" id="r-deficit">—</div><div class="ml">Daily deficit</div></div>
-      <div class="metric-card"><div class="mv" id="r-weeks">—</div><div class="ml">Weeks to goal</div></div>
+    <!-- Checkmark circle -->
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="width:72px;height:72px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="17" stroke="#1D9E75" stroke-width="2"/>
+          <path d="M10 18L15.5 23.5L26 12" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
     </div>
-    <div class="metrics-grid" id="metrics-gain" style="display:none">
-      <div class="metric-card"><div class="mv" id="r-daily-cals">—</div><div class="ml">Daily target</div></div>
-      <div class="metric-card"><div class="mv" id="r-surplus">—</div><div class="ml">Daily surplus</div></div>
-      <div class="metric-card"><div class="mv" id="r-muscle-month">—</div><div class="ml">Monthly gain est.</div></div>
-      <div class="metric-card"><div class="mv" id="r-muscle-6mo">—</div><div class="ml">Projected 6 months</div></div>
+    <!-- Congratulations message -->
+    <div style="text-align:center;padding:0 8px;">
+      <h2 style="font-size:20px;font-weight:700;color:#1a1a18;margin:0 0 12px;line-height:1.3;" id="congrats-title">Congratulations on taking this important step towards your fitness goals.</h2>
+      <p style="font-size:14px;color:#5f5e5a;line-height:1.7;margin:0 0 20px;">As promised, I sent you an email with your exact calorie target, goal date, and my favorite meal to stay on track without compromising your goals. Go check it out.</p>
+      <div style="background:#E1F5EE;border-radius:12px;padding:14px 16px;margin-bottom:0;">
+        <p style="font-size:13px;color:#085041;font-weight:500;margin:0;">Check your inbox for an email from <strong>Syris Sky</strong>. If you do not see it check your spam folder and mark it as not spam.</p>
+      </div>
     </div>
-    <div class="celebrate" id="celebrate-msg"></div>
   </div>
   <div class="spacer"></div>
   <div class="nav-row" style="padding-top:16px">
@@ -603,25 +608,22 @@ function submitEmail(){
   var name=document.getElementById('name-input').value.trim();
   var email=document.getElementById('email-input').value.trim();
   if(!name||!email||!email.includes('@'))return;
-  var firstName=name.split(' ')[0]; firstName=firstName.charAt(0).toUpperCase()+firstName.slice(1).toLowerCase();
+  var firstName=name.split(' ')[0];
+  firstName=firstName.charAt(0).toUpperCase()+firstName.slice(1).toLowerCase();
+
   var tdee=calcTDEE();
   var goal=answers['goal'];
+  var floor=answers['sex']==='female'?1200:1500;
   var w=parseFloat(document.getElementById('weight').value)||0;
-    var wKg=unit==='imperial'?w*0.453592:w;
-    var floorBase=answers['sex']==='female'?1200:1500;
-    var floor=Math.max(floorBase,Math.round(wKg*14));
-  var ifWin=getIFWindow();
-  var ifStr=ifWin.hours+':'+ifWin.eat+', eat between '+ifWin.start+' and '+ifWin.end;
-  var target,weeks,deficit,dateStr,ifText,timelineText,actionText,warnText='';
+  var wKg=unit==='imperial'?w*0.453592:w;
+  var floorBase=answers['sex']==='female'?1200:1500;
+  floor=Math.max(floorBase,Math.round(wKg*14));
+
+  var target,deficit,weeks,dateStr;
 
   if(goal==='lose'){
-    // ── LOSE FAT ──────────────────────────────────────────
-    document.getElementById('metrics-lose').style.display='grid';
-    document.getElementById('metrics-gain').style.display='none';
-    var paceEl=document.getElementById('pace');
-    var fatLbsEl=document.getElementById('fat-lbs');
-    var pace=paceEl?parseFloat(paceEl.value):1;
-    var fatLbs=fatLbsEl?parseFloat(fatLbsEl.value):20;
+    var pace=parseFloat(document.getElementById('pace').value)||1;
+    var fatLbs=parseFloat(document.getElementById('fat-lbs').value)||20;
     if(isNaN(pace)||pace<=0) pace=1;
     if(isNaN(fatLbs)||fatLbs<=0) fatLbs=20;
     var dailyDef=Math.round(pace*3500/7);
@@ -629,142 +631,79 @@ function submitEmail(){
     var safeTarget=Math.max(rawTarget,floor);
     var adjustedDef=tdee-safeTarget;
     var adjustedPace=(adjustedDef*7)/3500;
-    deficit=adjustedDef; target=safeTarget;
+    deficit=adjustedDef;
+    target=safeTarget;
     weeks=Math.round(fatLbs/adjustedPace);
     dateStr=getGoalDate(weeks);
-    // Flag unrealistic goals
     if(fatLbs>100){
-      warnText='Losing '+fatLbs+' lbs is a significant journey. At your chosen pace that is '+weeks+' weeks. Make sure you are set up for long term consistency, not a sprint.';
-    } else if(weeks>52){
-      warnText='At this pace your goal will take about '+Math.round(weeks/4)+' months. Consider a slightly faster pace if you want to see results sooner, as long as you stay above your safe calorie minimum.';
+      console.log('Long journey warning shown');
     }
-    if(safeTarget>rawTarget) warnText='Your chosen pace would drop calories below a safe level. I\'ve adjusted your target to '+safeTarget.toLocaleString()+' cal to protect your muscle and metabolism.';
-    ifText='Your IF window: '+ifStr+'. Built around your wake time so it works with your body clock, not against it.';
-    var smapLose={
-      hunger:'Since hunger is your biggest challenge, I\'ll send you my top 5 high-volume meals that keep you full on '+safeTarget.toLocaleString()+' calories. Big portions, real food, zero suffering.',
-      social:'Since social eating trips you up, I\'ll include my simple guide to eating out and staying on track without being that person at the table.',
-      cooking:'Since you\'re not sure what to eat, I\'ll send you my exact weekly meal rotation. 7 days of meals that fit your '+safeTarget.toLocaleString()+' cal target, all under 30 minutes to make.',
-      consistency:'Since consistency is your challenge, I\'ll share the exact system I use to stay on track when motivation is zero. It has nothing to do with willpower.'
-    };
-    actionText=smapLose[answers['struggle']]||'Your full personalised plan is on its way.';
-    timelineText='At a '+adjustedDef+' cal/day deficit you\'ll reach your goal by '+dateStr+' and that is ~'+weeks+' weeks away. Totally doable with the right system.';
-    document.getElementById('r-target').textContent=safeTarget.toLocaleString();
-    document.getElementById('r-date').textContent=dateStr;
-    document.getElementById('r-deficit').textContent=adjustedDef+' cal';
-    document.getElementById('r-weeks').textContent=weeks+' wks';
-
   }else if(goal==='gain'){
-    // ── BUILD MUSCLE ──────────────────────────────────────
-    document.getElementById('metrics-lose').style.display='none';
-    document.getElementById('metrics-gain').style.display='grid';
     var surplus=Math.round(tdee*0.10);
-    var dailyCals=tdee+surplus;
-    var expMap={beginner:1.5,intermediate:0.75,advanced:0.35};
-    var monthlyGain=expMap[answers['experience']]||0.75;
-    var sixMoGain=(monthlyGain*6).toFixed(1);
-    document.getElementById('r-surplus').textContent=surplus+' cal';
-    document.getElementById('r-daily-cals').textContent=dailyCals.toLocaleString();
-    document.getElementById('r-muscle-month').textContent=monthlyGain+' lb';
-    document.getElementById('r-muscle-6mo').textContent=sixMoGain+' lbs';
-    ifText='Your IF window: '+ifStr+'. A wider eating window makes hitting your surplus comfortable without forcing food.';
-    timelineText='At a '+surplus+' cal/day surplus you can expect to gain around '+monthlyGain+' lb of muscle per month. Over 6 months that is up to '+sixMoGain+' lbs of lean muscle with consistent training.';
-    var smapGain={
-      hunger:'Since appetite is your challenge, I\'ll send you my top calorie-dense meals that pack in nutrition without making you feel stuffed.',
-      cooking:'Since you\'re not sure what to eat for muscle, I\'ll send you my exact bulking meal rotation with the foods that actually move the needle.',
-      social:'Since you\'re gaining fat instead of muscle, I\'ll share how to hit your surplus with the right foods so you build lean, not soft.',
-      consistency:'Since consistency breaks you, I\'ll share the exact approach I use to stay in a clean surplus without panicking when the scale moves.'
-    };
-    actionText=smapGain[answers['struggle']]||'I\'ll send you my high-protein meal rotation designed for a lean bulk. Real food that makes hitting your surplus easy.';
-
+    target=tdee+surplus;
+    deficit=surplus;
+    weeks=null;
+    dateStr='—';
   }else{
-    // ── MAINTAIN ──────────────────────────────────────────
-    document.getElementById('metrics-lose').style.display='grid';
-    document.getElementById('metrics-gain').style.display='none';
-    target=tdee; deficit=0; weeks=null; dateStr='—';
-    document.getElementById('r-target').textContent=tdee.toLocaleString();
-    document.getElementById('r-date').textContent='—';
-    document.getElementById('r-deficit').textContent='0 cal';
-    document.getElementById('r-weeks').textContent='—';
-    ifText='Your IF window: '+ifStr+'. Keeps your maintenance calories on autopilot without constant tracking.';
-    timelineText='Maintenance is about consistency over perfection. Hitting your number most days is what compounds into real long-term results.';
-    actionText='I\'ll send you my maintenance meal framework. How to eat freely and satisfyingly without accidentally drifting into a surplus.';
+    target=tdee;
+    deficit=0;
+    weeks=null;
+    dateStr='—';
   }
 
-  // ── SHARED RESULTS ────────────────────────────────────
-  document.getElementById('r-tdee').textContent=tdee.toLocaleString();
-  var wb=document.getElementById('warning-box');
-  if(warnText){wb.textContent=warnText;wb.style.display='block';}
-  document.getElementById('celebrate-msg').textContent=firstName+', you just took the first real step. Your full plan is waiting in your inbox.';
-
-  var explainHTML='';
-  if(goal==='lose'){
-    explainHTML='<strong>What is a calorie deficit?</strong>A deficit means you are eating less calories than your body burns each day. That gap is what forces your body to burn stored fat for energy. You are not starving yourself, you are just giving your body a reason to use what it already has.';
-  }else if(goal==='gain'){
-    explainHTML='<strong>What is a calorie surplus?</strong>A surplus means you are eating more calories than your body burns each day. That extra fuel is what gives your muscles the energy they need to grow. Without it, your body has nothing to build with no matter how hard you train.';
-  }else{
-    explainHTML='<strong>What does maintenance mean?</strong>Maintenance means eating exactly what your body burns each day. You will not lose fat and you will not gain fat. It is the baseline your body needs just to function, and the number everything else is built around.';
-  }
-  // ── KLAVIYO EMAIL CAPTURE ─────────────────────────────
-  var KLAVIYO_PUBLIC_KEY = 'TizjNm';
-  var KLAVIYO_LIST_ID = 'XCg9Px';
-
-  var klaviyoPayload = {
-    data: {
-      type: 'subscription',
-      attributes: {
-        custom_source: 'Calorie Calculator',
-        profile: {
-          data: {
-            type: 'profile',
-            attributes: {
-              email: email,
-              first_name: firstName,
-              properties: {
-                goal: answers['goal'] || '',
-                experience: answers['experience'] || '',
-                body_fat: answers['bf'] || '',
-                eating_habits: answers['eating'] || '',
-                calorie_tracking: answers['tracking'] || '',
-                struggle: answers['struggle'] || '',
-                tdee: tdee,
-                daily_target: goal==='lose' ? target : (goal==='gain' ? target : tdee),
-                daily_deficit: goal==='lose' ? deficit : (goal==='gain' ? deficit : 0)
+  // ── KLAVIYO ──────────────────────────────────────────────────────
+  var KLAVIYO_PUBLIC_KEY='TizjNm';
+  var KLAVIYO_LIST_ID='XCg9Px';
+  var klaviyoPayload={
+    data:{
+      type:'subscription',
+      attributes:{
+        custom_source:'Calorie Calculator',
+        profile:{
+          data:{
+            type:'profile',
+            attributes:{
+              email:email,
+              first_name:firstName,
+              properties:{
+                goal:answers['goal']||'',
+                experience:answers['experience']||'',
+                body_fat:answers['bf']||'',
+                eating_habits:answers['eating']||'',
+                calorie_tracking:answers['tracking']||'',
+                struggle:answers['struggle']||'',
+                tdee:tdee,
+                daily_target:target,
+                daily_deficit:deficit
               }
             }
           }
         }
       },
-      relationships: {
-        list: {
-          data: {
-            type: 'list',
-            id: KLAVIYO_LIST_ID
+      relationships:{
+        list:{
+          data:{
+            type:'list',
+            id:KLAVIYO_LIST_ID
           }
         }
       }
     }
   };
 
-  fetch('https://a.klaviyo.com/client/subscriptions/?company_id=' + KLAVIYO_PUBLIC_KEY, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'revision': '2023-12-15'
-    },
-    body: JSON.stringify(klaviyoPayload)
+  fetch('https://a.klaviyo.com/client/subscriptions/?company_id='+KLAVIYO_PUBLIC_KEY,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','revision':'2023-12-15'},
+    body:JSON.stringify(klaviyoPayload)
   })
-  .then(function(res) {
-    console.log('Klaviyo status:', res.status);
-    return res.text();
-  })
-  .then(function(body) {
-    if(body) console.log('Klaviyo response:', body);
-  })
-  .catch(function(err) {
-    console.log('Klaviyo error:', err);
-  });
+  .then(function(res){console.log('Klaviyo status:',res.status);return res.text();})
+  .then(function(body){if(body)console.log('Klaviyo response:',body);})
+  .catch(function(err){console.log('Klaviyo error:',err);});
 
+  // ── UPDATE UI ─────────────────────────────────────────────────────
+  document.getElementById('congrats-title').textContent='Congratulations '+firstName+', you just took an important step towards your fitness goals.';
   document.getElementById('gate-box').style.display='none';
+  document.getElementById('results-top').style.display='none';
   document.getElementById('success-section').style.display='block';
   document.getElementById('send-btn').disabled=true;
 }
