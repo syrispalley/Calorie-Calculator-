@@ -335,28 +335,28 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <p class="social-proof">Join 2,400+ people who've used this calculator</p>
   </div>
   <div class="success-section" id="success-section">
-    <!-- Checkmark circle -->
-    <div style="text-align:center;margin-bottom:20px;">
-      <div style="width:72px;height:72px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 8px 0;">
+      <!-- Checkmark -->
+      <div style="width:72px;height:72px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;margin-bottom:24px;">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="18" cy="18" r="17" stroke="#1D9E75" stroke-width="2"/>
           <path d="M10 18L15.5 23.5L26 12" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-    </div>
-    <!-- Congratulations message -->
-    <div style="text-align:center;padding:0 8px;">
-      <h2 style="font-size:20px;font-weight:700;color:#1a1a18;margin:0 0 12px;line-height:1.3;" id="congrats-title">Congratulations on taking this important step towards your fitness goals.</h2>
-      <p style="font-size:14px;color:#5f5e5a;line-height:1.7;margin:0 0 20px;">As promised, I sent you an email with your exact calorie target, goal date, and my favorite meal to stay on track without compromising your goals. Go check it out.</p>
-      <div style="background:#E1F5EE;border-radius:12px;padding:14px 16px;margin-bottom:0;">
-        <p style="font-size:13px;color:#085041;font-weight:500;margin:0;">Check your inbox for an email from <strong>Syris Sky</strong>. If you do not see it check your spam folder and mark it as not spam.</p>
+      <!-- Congratulations + Name in green -->
+      <p id="congrats-name" style="font-size:30px;font-weight:800;color:#1D9E75;margin:0 0 24px;line-height:1.2;letter-spacing:-1px;"></p>
+      <!-- Short bold call to action -->
+      <p style="font-size:18px;font-weight:600;color:#1a1a18;margin:0 0 24px;line-height:1.4;">Check your inbox. Your plan is waiting.</p>
+      <!-- Supporting text -->
+      <p style="font-size:13px;color:#5f5e5a;line-height:1.75;margin:0 0 24px;">As promised, I sent you your exact calorie target, goal date, and my favorite meal to stay on track without compromising your goals.</p>
+      <!-- Inbox reminder -->
+      <div style="background:#E1F5EE;border-radius:12px;padding:16px 18px;width:100%;">
+        <p style="font-size:13px;color:#085041;font-weight:500;margin:0;line-height:1.7;">Do not see it? Check your spam folder and mark it as not spam.</p>
       </div>
     </div>
   </div>
   <div class="spacer"></div>
-  <div class="nav-row" style="padding-top:16px">
-    <button class="btn-back" id="back-final" onclick="backFromResults()">&#8592;</button>
-  </div>
+
 </div>
 
 
@@ -601,7 +601,6 @@ function showMaintenance(){
   el.style.display='block';
   el.style.overflowY='auto';
   document.getElementById('r-tdee').textContent=calcTDEE().toLocaleString();
-  document.getElementById('back-final').onclick=function(){goTo(answers['goal']==='lose'?9:8);};
 }
 
 function submitEmail(){
@@ -674,7 +673,9 @@ function submitEmail(){
                 struggle:answers['struggle']||'',
                 tdee:tdee,
                 daily_target:target,
-                daily_deficit:deficit
+                daily_deficit:deficit,
+                goal_date:goal==='lose'?dateStr:'N/A',
+                goal_weeks:goal==='lose'?weeks:null
               }
             }
           }
@@ -701,7 +702,7 @@ function submitEmail(){
   .catch(function(err){console.log('Klaviyo error:',err);});
 
   // ── UPDATE UI ─────────────────────────────────────────────────────
-  document.getElementById('congrats-title').textContent='Congratulations '+firstName+', you just took an important step towards your fitness goals.';
+  document.getElementById('congrats-name').textContent='Congratulations, '+firstName+'!';
   document.getElementById('gate-box').style.display='none';
   document.getElementById('results-top').style.display='none';
   document.getElementById('success-section').style.display='block';
