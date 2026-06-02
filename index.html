@@ -273,10 +273,10 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <h2 class="step-title" id="s8-title">What's your biggest struggle?</h2>
   <p class="step-sub" id="s8-sub">Pick the one that hits closest to home.</p>
   <div class="opts" id="g8">
-    <button class="opt-btn" id="s8-opt1" onclick="pickGreen('g8','struggle','opt1',this)"><span class="opt-title" id="s8-t1"></span><span class="opt-sub" id="s8-s1"></span></button>
-    <button class="opt-btn" id="s8-opt2" onclick="pickGreen('g8','struggle','opt2',this)"><span class="opt-title" id="s8-t2"></span><span class="opt-sub" id="s8-s2"></span></button>
-    <button class="opt-btn" id="s8-opt3" onclick="pickGreen('g8','struggle','opt3',this)"><span class="opt-title" id="s8-t3"></span><span class="opt-sub" id="s8-s3"></span></button>
-    <button class="opt-btn" id="s8-opt4" onclick="pickGreen('g8','struggle','opt4',this)"><span class="opt-title" id="s8-t4"></span><span class="opt-sub" id="s8-s4"></span></button>
+    <button class="opt-btn" id="s8-opt1" onclick="pickGreen('g8','struggle','hunger',this)"><span class="opt-title" id="s8-t1"></span><span class="opt-sub" id="s8-s1"></span></button>
+    <button class="opt-btn" id="s8-opt2" onclick="pickGreen('g8','struggle','social',this)"><span class="opt-title" id="s8-t2"></span><span class="opt-sub" id="s8-s2"></span></button>
+    <button class="opt-btn" id="s8-opt3" onclick="pickGreen('g8','struggle','cooking',this)"><span class="opt-title" id="s8-t3"></span><span class="opt-sub" id="s8-s3"></span></button>
+    <button class="opt-btn" id="s8-opt4" onclick="pickGreen('g8','struggle','consistency',this)"><span class="opt-title" id="s8-t4"></span><span class="opt-sub" id="s8-s4"></span></button>
   </div>
   <div class="spacer"></div>
   <div class="nav-row">
@@ -320,7 +320,14 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   </div>
   <p class="maintenance-desc">This is how many calories your body needs every day just to stay at your current weight. Eat less than this and you lose fat. Eat more and you build muscle.</p>
   <div class="gate-box" id="gate-box">
-    <p>Enter your details and I'll send your <strong>exact calorie target</strong>, <strong>personalised IF window</strong>, <strong>goal date</strong>, and the <strong>3 meals I eat to stay on track without feeling restricted.</strong></p>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+      <div style="width:44px;height:44px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:700;color:#085041;">S</div>
+      <div>
+        <p style="margin:0;font-size:13px;font-weight:600;color:#1a1a18;">Syris Sky</p>
+        <p style="margin:0;font-size:12px;color:#5f5e5a;">Lost 30lbs using this exact system</p>
+      </div>
+    </div>
+    <p>Enter your details and I'll send your <strong>exact calorie target</strong>, <strong>goal date</strong>, and <strong>my favorite meal to stay on track without compromising my goals.</strong></p>
     <input type="text" id="name-input" placeholder="First name" inputmode="text" autocomplete="given-name">
     <input type="email" id="email-input" placeholder="Email address" inputmode="email" autocomplete="email">
     <button class="btn-send" id="send-btn" onclick="submitEmail()">Send my plan</button>
@@ -334,10 +341,10 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
       <div class="metric-card"><div class="mv" id="r-weeks">—</div><div class="ml">Weeks to goal</div></div>
     </div>
     <div class="metrics-grid" id="metrics-gain" style="display:none">
+      <div class="metric-card"><div class="mv" id="r-daily-cals">—</div><div class="ml">Daily target</div></div>
       <div class="metric-card"><div class="mv" id="r-surplus">—</div><div class="ml">Daily surplus</div></div>
-      <div class="metric-card"><div class="mv" id="r-daily-cals">—</div><div class="ml">Daily calories</div></div>
-      <div class="metric-card"><div class="mv" id="r-muscle-month">—</div><div class="ml">Lbs muscle / month</div></div>
-      <div class="metric-card"><div class="mv" id="r-muscle-6mo">—</div><div class="ml">Projected in 6 months</div></div>
+      <div class="metric-card"><div class="mv" id="r-muscle-month">—</div><div class="ml">Monthly gain est.</div></div>
+      <div class="metric-card"><div class="mv" id="r-muscle-6mo">—</div><div class="ml">Projected 6 months</div></div>
     </div>
     <div class="celebrate" id="celebrate-msg"></div>
   </div>
@@ -408,7 +415,10 @@ function checkStep9(){
   var lbs=document.getElementById('fat-lbs').value;
   var pace=parseFloat(document.getElementById('pace').value);
   var warn=document.getElementById('pace-warn');
-  if(pace&&lbs){var tdee=calcTDEE();var floor=answers['sex']==='female'?1200:1500;var dailyDef=Math.round(pace*3500/7);warn.style.display=(tdee-dailyDef)<floor?'block':'none';}
+  if(pace&&lbs){var tdee=calcTDEE();var w=parseFloat(document.getElementById('weight').value)||0;
+    var wKg=unit==='imperial'?w*0.453592:w;
+    var floorBase=answers['sex']==='female'?1200:1500;
+    var floor=Math.max(floorBase,Math.round(wKg*14));var dailyDef=Math.round(pace*3500/7);warn.style.display=(tdee-dailyDef)<floor?'block':'none';}
   document.getElementById('n9').disabled=!(lbs&&pace);
 }
 
@@ -536,10 +546,10 @@ var microMessages = {
   eating: { opt1: "No worries, that's what we're here to fix.", opt2: "This is the most common story. You're not alone.", opt3: "That's actually a really common pattern.", opt4: "Weekends are where most people lose their progress." },
   tracking: { never: "No problem, we'll keep it simple.", tried: "It's easier with the right target. Let's get you one.", occasionally: "Consistency gets a lot easier once the number clicks.", yes: "Perfect, let's sharpen what you already know." },
   struggle: {
-    opt1: "That's more common than you think. We can work around it.",
-    opt2: "You can eat out and still hit your goals.",
-    opt3: "We'll sort that out in your plan.",
-    opt4: "It's not about willpower when the system is right."
+    hunger: "That's more common than you think. We can work around it.",
+    social: "You can eat out and still hit your goals.",
+    cooking: "We'll sort that out in your plan.",
+    consistency: "It's not about willpower when the system is right."
   }
 };
 
@@ -596,7 +606,10 @@ function submitEmail(){
   var firstName=name.split(' ')[0]; firstName=firstName.charAt(0).toUpperCase()+firstName.slice(1).toLowerCase();
   var tdee=calcTDEE();
   var goal=answers['goal'];
-  var floor=answers['sex']==='female'?1200:1500;
+  var w=parseFloat(document.getElementById('weight').value)||0;
+    var wKg=unit==='imperial'?w*0.453592:w;
+    var floorBase=answers['sex']==='female'?1200:1500;
+    var floor=Math.max(floorBase,Math.round(wKg*14));
   var ifWin=getIFWindow();
   var ifStr=ifWin.hours+':'+ifWin.eat+', eat between '+ifWin.start+' and '+ifWin.end;
   var target,weeks,deficit,dateStr,ifText,timelineText,actionText,warnText='';
@@ -619,13 +632,19 @@ function submitEmail(){
     deficit=adjustedDef; target=safeTarget;
     weeks=Math.round(fatLbs/adjustedPace);
     dateStr=getGoalDate(weeks);
+    // Flag unrealistic goals
+    if(fatLbs>100){
+      warnText='Losing '+fatLbs+' lbs is a significant journey. At your chosen pace that is '+weeks+' weeks. Make sure you are set up for long term consistency, not a sprint.';
+    } else if(weeks>52){
+      warnText='At this pace your goal will take about '+Math.round(weeks/4)+' months. Consider a slightly faster pace if you want to see results sooner, as long as you stay above your safe calorie minimum.';
+    }
     if(safeTarget>rawTarget) warnText='Your chosen pace would drop calories below a safe level. I\'ve adjusted your target to '+safeTarget.toLocaleString()+' cal to protect your muscle and metabolism.';
     ifText='Your IF window: '+ifStr+'. Built around your wake time so it works with your body clock, not against it.';
     var smapLose={
-      opt1:'Since hunger is your biggest challenge, I\'ll send you my top 5 high-volume meals that keep you full on '+safeTarget.toLocaleString()+' calories. Big portions, real food, zero suffering.',
-      opt2:'Since social eating trips you up, I\'ll include my simple guide to eating out and staying on track without being that person at the table.',
-      opt3:'Since you\'re not sure what to eat, I\'ll send you my exact weekly meal rotation. 7 days of meals that fit your '+safeTarget.toLocaleString()+' cal target, all under 30 minutes to make.',
-      opt4:'Since consistency is your challenge, I\'ll share the exact system I use to stay on track when motivation is zero. It has nothing to do with willpower.'
+      hunger:'Since hunger is your biggest challenge, I\'ll send you my top 5 high-volume meals that keep you full on '+safeTarget.toLocaleString()+' calories. Big portions, real food, zero suffering.',
+      social:'Since social eating trips you up, I\'ll include my simple guide to eating out and staying on track without being that person at the table.',
+      cooking:'Since you\'re not sure what to eat, I\'ll send you my exact weekly meal rotation. 7 days of meals that fit your '+safeTarget.toLocaleString()+' cal target, all under 30 minutes to make.',
+      consistency:'Since consistency is your challenge, I\'ll share the exact system I use to stay on track when motivation is zero. It has nothing to do with willpower.'
     };
     actionText=smapLose[answers['struggle']]||'Your full personalised plan is on its way.';
     timelineText='At a '+adjustedDef+' cal/day deficit you\'ll reach your goal by '+dateStr+' and that is ~'+weeks+' weeks away. Totally doable with the right system.';
@@ -638,7 +657,7 @@ function submitEmail(){
     // ── BUILD MUSCLE ──────────────────────────────────────
     document.getElementById('metrics-lose').style.display='none';
     document.getElementById('metrics-gain').style.display='grid';
-    var surplus=300;
+    var surplus=Math.round(tdee*0.10);
     var dailyCals=tdee+surplus;
     var expMap={beginner:1.5,intermediate:0.75,advanced:0.35};
     var monthlyGain=expMap[answers['experience']]||0.75;
@@ -650,10 +669,10 @@ function submitEmail(){
     ifText='Your IF window: '+ifStr+'. A wider eating window makes hitting your surplus comfortable without forcing food.';
     timelineText='At a '+surplus+' cal/day surplus you can expect to gain around '+monthlyGain+' lb of muscle per month. Over 6 months that is up to '+sixMoGain+' lbs of lean muscle with consistent training.';
     var smapGain={
-      opt1:'Since appetite is your challenge, I\'ll send you my top calorie-dense meals that pack in nutrition without making you feel stuffed.',
-      opt2:'Since you\'re not sure what to eat for muscle, I\'ll send you my exact bulking meal rotation with the foods that actually move the needle.',
-      opt3:'Since you\'re gaining fat instead of muscle, I\'ll share how to hit your surplus with the right foods so you build lean, not soft.',
-      opt4:'Since consistency breaks you, I\'ll share the exact approach I use to stay in a clean surplus without panicking when the scale moves.'
+      hunger:'Since appetite is your challenge, I\'ll send you my top calorie-dense meals that pack in nutrition without making you feel stuffed.',
+      cooking:'Since you\'re not sure what to eat for muscle, I\'ll send you my exact bulking meal rotation with the foods that actually move the needle.',
+      social:'Since you\'re gaining fat instead of muscle, I\'ll share how to hit your surplus with the right foods so you build lean, not soft.',
+      consistency:'Since consistency breaks you, I\'ll share the exact approach I use to stay in a clean surplus without panicking when the scale moves.'
     };
     actionText=smapGain[answers['struggle']]||'I\'ll send you my high-protein meal rotation designed for a lean bulk. Real food that makes hitting your surplus easy.';
 
@@ -708,8 +727,8 @@ function submitEmail(){
                 calorie_tracking: answers['tracking'] || '',
                 struggle: answers['struggle'] || '',
                 tdee: tdee,
-                daily_target: goal==='lose' ? target : (goal==='gain' ? tdee+300 : tdee),
-                daily_deficit: goal==='lose' ? deficit : (goal==='gain' ? 300 : 0)
+                daily_target: goal==='lose' ? target : (goal==='gain' ? target : tdee),
+                daily_deficit: goal==='lose' ? deficit : (goal==='gain' ? deficit : 0)
               }
             }
           }
