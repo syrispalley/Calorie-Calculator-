@@ -9,13 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
-html,body{min-height:100%;background:#F5ECD7;font-family:'Lato',-apple-system,sans-serif;color:#2D2D2D;display:flex;align-items:flex-start;justify-content:center;padding:0}
+html,body{min-height:100%;background:#FAFAFA;font-family:'Lato',-apple-system,sans-serif;color:#2D2D2D;display:flex;align-items:flex-start;justify-content:center;padding:0}
 .phone-frame{width:100%;max-width:430px;min-height:100vh;min-height:-webkit-fill-available;background:#FAFAFA;overflow:hidden;position:relative}
 @media(min-width:500px){
-  body{align-items:center;padding:40px 20px}
+  body{align-items:center;padding:40px 20px;background:#F5ECD7}
   .phone-frame{width:430px;min-width:430px;min-height:700px;border-radius:36px;border:1px solid #C9DEC6;box-shadow:0 8px 48px rgba(45,45,45,.13),0 2px 8px rgba(90,122,86,.08)}
 }
-.phone-inner{padding:32px 22px 28px;padding-top:max(32px,env(safe-area-inset-top));padding-bottom:max(28px,env(safe-area-inset-bottom));min-height:100vh;min-height:-webkit-fill-available;display:flex;flex-direction:column}
+.phone-inner{padding:32px 22px 28px;padding-top:max(32px,env(safe-area-inset-top));padding-bottom:max(28px,env(safe-area-inset-bottom));height:100vh;height:-webkit-fill-available;display:flex;flex-direction:column}
 @media(min-width:500px){.phone-inner{min-height:700px;padding:52px 28px 40px}}
 @media(min-width:500px){.step-title{font-size:26px}}
 .progress-bar{display:flex;gap:4px;margin-bottom:24px;flex-shrink:0;align-items:center}
